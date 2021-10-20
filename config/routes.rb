@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
 
+# URL /customers/sign_in ...
+devise_for :customers, skip: [:passwords], controllers: {
+  registrations: "customer/registrations",
+  sessions: "customer/sessions"
+}
 
   # 会員用
+  scope module: :customer do
 
     root to: 'homes#top' 
     get '/about' => 'homes#about'
@@ -11,7 +17,7 @@ Rails.application.routes.draw do
     delete 'cart_items/clear' => 'cart_items#clear'
 
     resources :items, only: [:index, :show]
-    resources :customers, only: [:show, :edit, :update]
+    resource :customers, only: [:show, :edit, :update]
 
     get 'customers/confirm' => 'customers#confirm'
     patch 'customers/withdraw' => 'customers#withdraw'
@@ -22,12 +28,9 @@ Rails.application.routes.draw do
     post 'orders/confirm' => 'orders#confirm'
 
     resources :addresses, only: [:create, :index, :destroy, :edit, :update]
-
-# URL /customers/sign_in ...
-devise_for :customers,skip: [:passwords,], controllers: {
-  registrations: "customer/registrations",
-  sessions: 'customer/sessions'
-}
+  end
+  
+    
 
 
 

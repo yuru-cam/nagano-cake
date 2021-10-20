@@ -48,6 +48,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
+gem "devise-i18n" #deviseの日本語化
 
 gem "enum_help"
 
