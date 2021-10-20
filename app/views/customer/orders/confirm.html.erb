@@ -1,0 +1,19 @@
+
+<!--会員側：注文確定画面-->
+
+
+<p>注文情報確認</p>
+
+<p>アイテム情報</p>　
+<!--これをやるならitems.rb でhas_many使ってアソシエーションしないといけないみたい-->
+  <%= @item.name %>
+  <%= @item.price %>
+
+
+<!--form_withで入力された情報をデータベースに保存するための記述-->
+<!--モデルクラスのインスタンス変数がitemとorder,これ保存に必要-->
+<%= form_with ([model: @item, @order],local: true url: item_order_confirm_path) do |f| %>
+  <%= f.text_field :quantity %> <br>
+  <%= f.text_field :amount %> <br>
+  <%= f.submit "送信" %> <br>
+<% end %>

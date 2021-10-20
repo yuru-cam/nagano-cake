@@ -1,0 +1,44 @@
+
+<!--会員側：新規注文受付、支払方法入力画面-->
+
+<p>注文情報入力</p>
+
+<p>支払方法</p>
+
+<!--モデルオプションのform_with使用してるからコントローラにインスタンスを指定する！-->
+<%= form_with model: @order do |form| %>
+  <!--もしエラー出たら-->
+  <% if ＠order.errors.any? %>
+  　<!--バリデーションエラー文がこれ-->
+    <div id="error_explanation" class="alert alert-danger">
+      <ul>
+        <% @order.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<p>支払方法</p>
+  <div class="field">
+    <%= form.label :payment %>
+    <%= form.select :payment, Order.payments.keys.to_a, {} %>
+  </div>
+
+<!--<p>お届け先</p>-->
+<!--配送先との関連付けが必要、仮入力・・・-->
+
+<!--  <div class="field">-->
+<!--    <%#= form.label :address %>-->
+<!--    <%#= form.select :address, Order.addresses.keys.to_a, {} %>-->
+<!--  </div>-->
+
+
+<!--ボタン表示させるためlinl_toの引数１つに、そしてdo追加、-->
+<!--さらにdo,endでボタン化させるためのhtml記述のサンドイッチ-->
+  <%=link_to("adomins/confirm") do %>
+    <button class="btn btn-secondary btn-lg" >確認画面へ進む</button>
+  <%end%>
+
+ <!--前後のレコードを取得したままページを遷移させるのか？-->
+<!--普通にリンク貼ってその先のページで関連付けすれば良いのか？-->
