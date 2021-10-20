@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
 
   # 会員用
+  scope module: :customer do
+
     root to: 'homes#top' 
     get '/about' => 'homes#about'
 
@@ -21,6 +23,8 @@ Rails.application.routes.draw do
     post 'orders/confirm' => 'orders#confirm'
 
     resources :addresses, only: [:create, :index, :destroy, :edit, :update]
+  end
+  
     
     
     
