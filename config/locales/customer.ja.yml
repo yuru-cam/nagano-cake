@@ -11,3 +11,4 @@ ja:
         address: 住所
         phone_number: 電話番号(ハイフンなし)
         password: パスワード
+        password_confirmation: パスワード(確認用)

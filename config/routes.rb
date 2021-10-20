@@ -37,7 +37,6 @@ devise_for :customers,skip: [:passwords,], controllers: {
 
 
 
-
 # 管理者用
 
 namespace :admin do
