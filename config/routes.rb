@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+# URL /customers/sign_in ...
+devise_for :customers, skip: [:passwords], controllers: {
+  registrations: "customer/registrations",
+  sessions: "customer/sessions"
+}
 
   # 会員用
   scope module: :customer do
@@ -12,7 +17,7 @@ Rails.application.routes.draw do
     delete 'cart_items/clear' => 'cart_items#clear'
 
     resources :items, only: [:index, :show]
-    resources :customers, only: [:show, :edit, :update]
+    resource :customers, only: [:show, :edit, :update]
 
     get 'customers/confirm' => 'customers#confirm'
     patch 'customers/withdraw' => 'customers#withdraw'
@@ -33,6 +38,7 @@ devise_for :customers,skip: [:passwords,], controllers: {
   registrations: "customer/registrations",
   sessions: 'customer/sessions'
 }
+    
 
 
 
