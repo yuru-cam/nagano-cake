@@ -30,6 +30,11 @@ devise_for :customers, skip: [:passwords], controllers: {
     resources :addresses, only: [:create, :index, :destroy, :edit, :update]
   end
   
+# URL /customers/sign_in ...
+devise_for :customers,skip: [:passwords,], controllers: {
+  registrations: "customer/registrations",
+  sessions: 'customer/sessions'
+}
     
 
 
