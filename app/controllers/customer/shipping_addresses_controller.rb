@@ -36,7 +36,7 @@ class Customer::ShippingAddressesController < ApplicationController
     def update
         shipping_address = ShippingAddress.find(params[:id])
         shipping_address.update(shipping_address_params)
-        redirect_to customers_shipping_addresses_path
+        redirect_to shipping_addresses_path
     end
 
     private
