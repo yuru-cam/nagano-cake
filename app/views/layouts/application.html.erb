@@ -7,8 +7,16 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
+  
   <body>
-    <%= yield %>
+    <!--ヘッダー-->
+    <header><%= render "layouts/header" %></header>
+     <!--body部分（本文）-->
+    <main>
+      <div><%= yield %></div>
+    </main>
+    <!--フッター-->
+    <footer><%= render "layouts/footer" %></footer>
   </body>
+
 </html>

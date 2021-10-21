@@ -1,0 +1,39 @@
+<header>
+  <div>
+    <!--ロゴ-->
+    <div>
+    <nav class="navbar-default" style="background-color: #e3f2fd;">
+      <ul class="nav-link">
+      <%= link_to image_tag("naganocake.png", size: "100x100") , root_path %>
+      </ul>
+    
+    <!--案内-->
+      <ul class="navbar-nav ml-auto">
+        <% if customer_signed_in? %>
+        <!--カスタマーがログインしている時 -->
+        　<li class="nav-link">ようこそ、<%= current_customer.last_name + current_customer.first_name %>さん！</li>
+        　<li class="nav-link"><%= link_to "マイページ", customers_path %></li>
+        　<li class="nav-link"><%= link_to "商品一覧", items_path %></li>
+        　<li class="nav-link"><%= link_to "カート", cart_items_path %></li>
+        　<li class="nav-link"><%= link_to "ログアウト", destroy_customer_session_path, method: :delete %></li>
+        　
+        <% elsif admin_signed_in? %>
+        <!--管理者がログインしている時-->
+         <li class="nav-link"><%= link_to "商品一覧", admin_items_path %></li>
+         <li class="nav-link"><%= link_to "会員一覧", admin_customers_path %></li>
+         <li class="nav-link"><%= link_to "注文履歴一覧", admin_root_path %></li>
+         <li class="nav-link"><%= link_to "ジャンル一覧", admin_genres_path %></li>
+         <li class="nav-link"><%= link_to "ログアウト", destroy_admin_session_path, method: :delete %></li>
+         
+        <% else %>
+        <!-- ログインしていない時 -->
+          <li class="nav-link"><%= link_to "About", about_path %></li>
+          <li class="nav-link"><%= link_to "商品一覧", items_path %></li>
+          <li class="nav-link"><%= link_to "新規登録", new_customer_registration_path %></li>
+          <li class="nav-link"><%= link_to "ログイン", new_customer_session_path %></li>
+        <% end %>
+      </ul>
+    </nav>
+    </div>
+  </div>
+</header>
