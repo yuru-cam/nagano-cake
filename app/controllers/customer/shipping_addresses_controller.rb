@@ -3,7 +3,7 @@ class Customer::ShippingAddressesController < ApplicationController
   # 配送先一覧/配送先登録画面
     def index
         @shipping_address = ShippingAddress.new
-        # @shipping_addresses = current_customer.shipping_addresses
+        @shipping_addresses = current_customer.shipping_addresses.all
     end
   
   # 配送先登録ボタン
@@ -15,7 +15,7 @@ class Customer::ShippingAddressesController < ApplicationController
             flash[:success] = "登録しました。"
         else
             @shipping_address = ShippingAddress.new
-            @shipping_addresses = current_customer.shipping_addresses
+            @shipping_addresses = ShippingAddress.all
             render 'index'
         end
     end
