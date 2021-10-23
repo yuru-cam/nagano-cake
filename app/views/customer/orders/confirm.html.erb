@@ -1,19 +1,62 @@
 
 <!--会員側：注文確定画面-->
 
+<!--<div class="container" style="margin-top: 20px;">-->
+ <h4>注文情報確認</h4>
+ <!--bootstrapで、画面横幅を12分割、そのうちの８個を使用しますよという記述-->
+ <!--table class=でテーブル用のデザイン付与、table-borderdでテーブルに羅線を付けています。-->
+<!--each doで繰り返し処理を行う-->
+<div class="row>
+	<div class="col-xs-8">
+		<table class="table table-bordered">
+			<tr>
+				<th>商品名</th>
+				<th>単価（税込）</th>
+				<th>数量</th>
+				<th>小計</th>
+			</tr>
 
-<p>注文情報確認</p>
+		<% @items.each do |item| %>
+			<tr>
+				<td><%= item.product.name %></td>
+				<td><%= addTax(item.product.price) %></td>
+				<td><%= item.quantity %></td>
+				<td><%= addTax(item.price) %></td>
+			</tr>
+		<% end %>
+		</table>
+	</div>
 
-<p>アイテム情報</p>　
-<!--これをやるならitems.rb でhas_many使ってアソシエーションしないといけないみたい-->
-  <%= @item.name %>
-  <%= @item.price %>
 
+	<div class="col-xs-4">
+		<table class="table table-bordered">
+			<tr>
+				<th>送料</th>
+				<td>800</td>
+			</tr>
+			<tr>
+				<th>商品合計</th>
+				<td><%= addTax(@items.sum(:price)) %></td>
+			</tr>
+			<tr>
+				<th>請求金額</th>
+				<td><%= addTax(@items.sum(:price))+800 %></td>
+			</tr>
+		</table>
+	</div>
+</div>
 
-<!--form_withで入力された情報をデータベースに保存するための記述-->
-<!--モデルクラスのインスタンス変数がitemとorder,これ保存に必要-->
-<%= form_with ([model: @item, @order],local: true url: item_order_confirm_path) do |f| %>
-  <%= f.text_field :quantity %> <br>
-  <%= f.text_field :amount %> <br>
-  <%= f.submit "送信" %> <br>
-<% end %>
+<h4>支払い方法</h4>
+	<p><%= @order.payment %></p>
+
+<h4>お届け先</h4>
+	<p>〒<%= @order.ship_postal_code %>
+	<%= @order.shipping_address %>
+	<%= @order.last_name %> <%= @order.first_name %></p>
+
+<hr>
+
+<div class="text-center">
+	<%= link_to '注文を確定する', orders_finish_path, class:"btn btn-success" %>
+</div>
+</div>
