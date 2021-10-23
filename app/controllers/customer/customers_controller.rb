@@ -15,6 +15,17 @@ class Customer::CustomersController < ApplicationController
     redirect_to customers_path
   end
   
+  def confirm
+    @customer = current_customer
+  end
+  
+  # 退会アクション
+  def withdraw
+    @customer = current_customer
+    @customer.update(is_deleted: true)
+    reset_session
+    redirect_to root_path
+  end
   
   private
 
