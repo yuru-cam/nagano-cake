@@ -26,3 +26,5 @@ Things you may want to cover:
 practiceだよ
 
 practiceだよ２
+
+10/21 Gemfile反映するために少し編集（この部分だけ）

@@ -2,7 +2,7 @@
 
 <p>会員の方はこちらからログイン</p>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+<%= form_with model:@customer, url: new_customer_session_path do |f| %>
   <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "sample@example.com" %>
