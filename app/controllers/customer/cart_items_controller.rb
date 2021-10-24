@@ -6,37 +6,36 @@ class Customer::CartItemsController < ApplicationController
 
   def index
     @cart_items = current_customer.cart_items
-    # カートアイテムの中のidを取り出してプライスのところをitem_
-    # @total_price = @cart_items.sum(:price)
-    # @total = @cart_items.inject(0) { |sum, item| sum + item.sum_of_price }
   end
 
 
   def create
-    p @cart_item = CartItem.new(item_params)
-    p @cart_item.customer_id = current_customer.id
-    # p @cart_item.item_id = params[:item_id]
-    #税抜の小計価格を設定
-    # @cart_item.price = item_id.price * item_id.quantity
-    p @cart_item.save
+    @cart_item = CartItem.new(item_params)
+    @cart_item.customer_id = current_customer.id
+    @cart_item.save
     redirect_to cart_items_path
   end
+  
+  #カートを空にする
+  def clear
+  	@cart_items = current_customer.cart_items
+    @cart_items.destroy_all
+    redirect_to cart_items_path
+  end
+  
+  # 削除や個数を変更した際、カート商品を再計算する
+    def update
+        @cart_item = CartItem.find(params[:id])
+        @cart_item.update(item_params)
+        redirect_to cart_items_path
+    end
 
-  #商品の入ったカートを空にする
+  #1商品を削除する
   def destroy
     @cart_item = CartItem.find(params[:id])
   	@cart_item.destroy
     redirect_to cart_items_path
   end
-
-  #カートを空にする
-  def destroy_all
-  	@cart_items = current_customer.cart_items
-    @cart_items.destroy_all
-    redirect_to cart_items_path
-  end
-
-
 
   private
     def item_params
