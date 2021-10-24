@@ -1,0 +1,21 @@
+<div class ="container">
+    <h2>ジャンル検索</h2>
+    <div class="row-4">
+        <div class="col">
+        </div>
+    </div>
+    <h2>商品一覧</h2>
+    <div class="row-8">
+        <div class="col d-flex flex-wrap wrap">
+            <!--アイテム要素-->
+            <% @items.each do |item| %>
+            <div class="col",style="padding-right: 0px; padding-left: 0px; margin: 10px 0;">
+				<%= link_to attachment_image_tag(item, :item_image ,size:'300x300') , item_path(item.id) %></br>
+				<%= item.name %></br>
+				¥<%= item.price.to_s(:delimited, delimiter: ',') %>
+			</div>
+			<% end %>
+        </div>
+        <%= paginate @items %>
+    </div>
+</div>
