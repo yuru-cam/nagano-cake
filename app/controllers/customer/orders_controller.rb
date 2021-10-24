@@ -1,13 +1,13 @@
 class Customer::OrdersController < ApplicationController
 
-#管理者とログインユーザーのみ閲覧可の記述
-	before_action :authenticate!
+# #管理者とログインユーザーのみ閲覧可の記述
+# 	before_action :authenticate!
 
-#退会済みユーザーは閲覧不可の記述
- 	before_action :customer_is_deleted
+# #退会済みユーザーは閲覧不可の記述
+# 	before_action :customer_is_deleted
 
-#param[:id]が取得できない場合、閲覧不可
- 	before_action :params_check, only: [:index]
+# #param[:id]が取得できない場合、閲覧不可
+# 	before_action :params_check, only: [:index]
 
 
 # 注文一覧
@@ -23,8 +23,8 @@ class Customer::OrdersController < ApplicationController
 
 # 顧客の購入情報の入力画面
 	def new
-		@ship_addresses = current_customer.ship_addresses
-    @ship_address = ShipAddress.new
+		@ship_addresses = current_customer.shipping_addresses
+    @ship_address = ShippingAddress.new
     @order = Order.new
 	end
 
@@ -36,6 +36,7 @@ class Customer::OrdersController < ApplicationController
     elsif params[:select] == "my_address"
       session[:address] ="〒" +current_customer.post_code+current_customer.address+current_customer.last_name+current_customer.first_name
     end
+    
     if session[:address].present? && session[:payment].present?
       redirect_to orders_confirm_path
     else

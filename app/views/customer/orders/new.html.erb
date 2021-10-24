@@ -3,82 +3,65 @@
 
 <p>注文情報入力</p>
 
-<p>支払方法</p>
-
 <!--モデルオプションのform_with使用してるからコントローラにインスタンスを指定する！-->
-<%= form_with model: @order do |form| %>
+<%= form_with model: @order do |f| %>
   <!--もしエラー出たら-->
-  <% if ＠order.errors.any? %>
+  <!--<#% if ＠order.errors.any? %>-->
   　<!--バリデーションエラー文がこれ-->
-    <div id="error_explanation" class="alert alert-danger">
-      <ul>
-        <% @order.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <!--  <div id="error_explanation" class="alert alert-danger">-->
+  <!--    <ul>-->
+  <!--      <#% @order.errors.full_messages.each do |message| %>-->
+  <!--        <li><#%= message %></li>-->
+  <!--      <#% end %>-->
+  <!--    </ul>-->
+  <!--  </div>-->
+  <!--<#% end %>-->
 
 <p>支払方法</p>
   <div class="field">
-    <%= form.label :payment %>
-    <%= form.select :payment, Order.payments.keys.to_a, {} %>
+    <%= f.radio_button :payment_method, Order.payment_methods.key(0) %>
+    <%= f.label :payment_method, Order.payment_methods_i18n[:credit_card] %>
+    <%= f.radio_button :payment_method, Order.payment_methods.key(1) %>
+    <%= f.label :payment_method, Order.payment_methods_i18n[:transfer]%>
   </div>
 
   <div class="form-group">
 		<label><span class="glyphicon glyphicon-stop"></span>お届け先</label>
 		<!-- ここから下がご自身の住所 -->
 		<div class="radio">
-			<label>
-				<%= radio_button_tag("_add", "usersAdd") %>ご自身の住所:
-			</label>
-			<span>〒<%= current_user.postal_code %> <%= current_user.address %></span>
+			<%= f.radio_button :select , "my_address"%>
+			<%= f.label :select, "ご自身の住所" %>
+			<span>〒<%= current_customer.postcode%><%= current_customer.address%><%= current_customer.full_name%></span>
+			<span>〒<%= current_customer.postcode %> <%= current_customer.address %></span>
 		</div>
-
-
 		<!-- ここから下が登録済住所から選択 -->
 		<div class="radio">
-			<label><%= radio_button_tag("_add", "shipAdds") %>登録済住所から選択</label>
+			<%= f.radio_button :select , "select_address" %>
+			<%= f.label :select, "登録済み住所から選択" %>
+			<%= f.select :select, options_from_collection_for_select(ShippingAddress.all, :id, :full_address) %>
 		</div>
-			<%= collection_select(:ShipToAddress, :id, @ads, :id, :address) %>
-
 		<!-- ここから下が新しく配送先を設定-->
 		<div class="radio">
-			<label>
-				<%= radio_button_tag("_add", "newAdd") %>
-				新しいお届け先
-			</label>
-		</div>
-
-		<div id="form">
-			<p class="text">ご希望のお届け先を入力してください。</p>
-			<%= fields_for :ship_to_address do |a| %>
-
-		<div class="form-group">
-			<label for="inputPostalCode">郵便番号（ハイフンなし）</label>
-				<%= a.text_field :postal_code, class:"form-control", id:"inputPostalCode", style:"width:30%;" %>
-		</div>
-
-		<div class="form-group">
-			<label for="inputAddress">住所</label>
-				<%= a.text_field :address, class:"form-control", id:"inputAddress", style:"width:70%;" %>
-		</div>
-
-		<div class="form-group">
-			<label>宛名</label>
-			<div>
-				<%= a.text_field :last_name, class:"form-control col-xs-4", style:"width:30%;" %>
-				<%= a.text_field :first_name, class:"form-control col-xs-4", style:"width:30%;" %>
-			</div>
-		</div>
-
-		<div class="row" style="margin:10px 0;"></div>
-
-	<hr>
-	<div class="text-center">
+			<%= f.radio_button :select , "new_address" %>
+			<%= f.label :select, "新しいお届け先" %>
+			 <div class="form-group">
+        <%= f.label :"郵便番号(ハイフンなし)" ,class: "control-label" %>
+        <%= f.text_field :shipping_postcode, class: "form-control-static postal_code" %>
+       </div>
+       <div class="form-group">
+         <%= f.label :"住所" ,class: "control-label" %>
+         <%= f.text_field :shipping_address, class: "form-control-static address" %>
+       </div>
+       <div class="form-group">
+          <%= f.label :"宛名" ,class: "control-label" %>
+          <%= f.text_field :shipping_name, class: "form-control-static name" %>
+        </div>
+    </div>
+    <div class="text-center">
 		<%= f.submit '確認画面へ進む', class:"btn btn-success" %>
-	</div>
-<% end %>
+		</div>
+		<% end %>
+
 </div>
 
 
@@ -95,7 +78,4 @@
 <!--さらにdo,endでボタン化させるためのhtml記述のサンドイッチ-->
   <%=link_to("adomins/confirm") do %>
     <button class="btn btn-secondary btn-lg" >確認画面へ進む</button>
-  <%end%>
-
- <!--前後のレコードを取得したままページを遷移させるのか？-->
-<!--普通にリンク貼ってその先のページで関連付けすれば良いのか？-->
+  <% end %>

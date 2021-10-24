@@ -5,8 +5,8 @@ class ShippingAddress < ApplicationRecord
   validates :shipping_address, presence: true
   validates :shipping_name, presence: true
   
-  def shipping_address_for_view
-  	self.postal_code + "　" + self.address + "　" + self.name
+  def full_address
+    '〒' + shipping_postcode + ' ' + shipping_address + ' ' + shipping_name
   end
 
 end
