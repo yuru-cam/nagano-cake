@@ -15,7 +15,13 @@
       <th><%= customer.id %></th>
       <th><%= customer.full_name %></th>
       <th><%= customer.email %></th>
-      <th><%= customer.is_deleted %></th>
+      <th>
+        <% if customer.is_deleted == false %>
+          有効
+        <% else %>
+          退会
+        <% end %>
+      </th>
     </tr>
   </tbody>
   <% end %>
