@@ -12,7 +12,7 @@ class Customer::CustomersController < ApplicationController
   def update
     @customer = current_customer
     @customer.update(customer_params)
-    redirect_to customers_path
+    redirect_to customers_path(@customer)
   end
   
   def confirm
