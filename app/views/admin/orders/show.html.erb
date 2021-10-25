@@ -10,15 +10,15 @@
 		<tr>
 			<th>購入者</th>
 			<td><%= link_to  admins_user_path(@order.id) do %>
-					<%= @order.user.last_name %>
-					<%= @order.user.first_name %>
+					<%= @order.customer.last_name %>
+					<%= @order.customer.first_name %>
 					<% end %>
 			</td>
 		</tr>
 
 		<tr>
 			<th>配送先</th>
-			<td><%= @order.ship_postal_code %>
+			<td><%= @order.shipping_poscode %>
 					<%= @order.shipping_address %>
 					<br>
 					<%= @order.last_name %>
