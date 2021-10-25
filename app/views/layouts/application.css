@@ -1,0 +1,11 @@
+/*body {*/
+/*  background-image: url(naganocake.png);*/
+/*}*/
+
+.jumbotron-extend {
+    height: 100vh;
+    min-height: 350px;
+    margin-bottom: 60px;
+    background: url(naganocake.png) no-repeat center center;
+    background-size: cover;
+}

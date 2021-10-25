@@ -16,3 +16,40 @@
 @import "bootstrap";
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
+
+
+.jumbotron-extend {
+    height: 100vh;
+    min-height: 350px;
+    margin-bottom: 60px;
+    background: url(cafe.jpeg) no-repeat center center;
+    background-size: cover;
+}
+// .jumbotron-container {
+//     position: relative;
+//     top: 50%;
+//     -webkit-transform: translateY(-50%);
+//     -ms-transform: translateY(-50%);
+//     transform: translateY(-50%);
+//     padding-left: 30px;
+//     padding-right: 30px;
+// }
+
+.site-name {
+    margin-bottom: 60px;
+    font-family: 'Playfair Display', serif;
+    color: white;
+}
+
+.btn-black {
+    border-radius: 0;
+    background-color: #000;
+    color: white;
+    font-family: 'Avenir', serif;
+}
+
+.nav-link {
+    collor: white
+  
+  
+}
