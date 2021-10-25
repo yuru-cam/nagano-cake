@@ -29,20 +29,20 @@
 		<label><span class="glyphicon glyphicon-stop"></span>お届け先</label>
 		<!-- ここから下がご自身の住所 -->
 		<div class="radio">
-			<%= f.radio_button :select , "my_address"%>
+			<%= f.radio_button :select , "1"%>
 			<%= f.label :select, "ご自身の住所" %>
 			<span>〒<%= current_customer.postcode%><%= current_customer.address%><%= current_customer.full_name%></span>
 			<span>〒<%= current_customer.postcode %> <%= current_customer.address %></span>
 		</div>
 		<!-- ここから下が登録済住所から選択 -->
 		<div class="radio">
-			<%= f.radio_button :select , "select_address" %>
+			<%= f.radio_button :select , "2" %>
 			<%= f.label :select, "登録済み住所から選択" %>
 			<%= f.select :select, options_from_collection_for_select(ShippingAddress.all, :id, :full_address) %>
 		</div>
 		<!-- ここから下が新しく配送先を設定-->
 		<div class="radio">
-			<%= f.radio_button :select , "new_address" %>
+			<%= f.radio_button :select , "3" %>
 			<%= f.label :select, "新しいお届け先" %>
 			 <div class="form-group">
         <%= f.label :"郵便番号(ハイフンなし)" ,class: "control-label" %>
@@ -58,7 +58,7 @@
         </div>
     </div>
     <div class="text-center">
-		<%= f.submit '確認画面へ進む', class:"btn btn-success" %>
+		<%= f.submit '確認画面へ進む', url: orders_confirm_path , method: :post ,class:"btn btn-success" %>
 		</div>
 		<% end %>
 
@@ -76,6 +76,4 @@
 
 <!--ボタン表示させるためlinl_toの引数１つに、そしてdo追加、-->
 <!--さらにdo,endでボタン化させるためのhtml記述のサンドイッチ-->
-  <%=link_to("adomins/confirm") do %>
-    <button class="btn btn-secondary btn-lg" >確認画面へ進む</button>
-  <% end %>
+  <%= link_to "確認画面へ進む", orders_confirm_path , method: :post %>

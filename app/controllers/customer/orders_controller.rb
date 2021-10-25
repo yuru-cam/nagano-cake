@@ -30,30 +30,42 @@ class Customer::OrdersController < ApplicationController
 
 #情報入力画面でボタンを押して情報をsessionに保存
   def create
-    session[:payment] = params[:payment]
-    if params[:select] == "select_address"
-      session[:address] = params[:address]
-    elsif params[:select] == "my_address"
-      session[:address] ="〒" +current_customer.post_code+current_customer.address+current_customer.last_name+current_customer.first_name
+    session[:payment_method] = params[:payment_method]
+    if
+      params[:select] == "1"
+      session[:shipping_address] = params[:shipping_address]
+      session[:shipping_name] = params[:shipping_name]
+      session[:shipping_postcode] = params[:shipping_postcode]
+      redirect_to orders_confirm_path
+    elsif 
+      params[:select] == "2"
+      p session[:shipping_address] = params[:full_address]
+      "〒" + current_customer.postcode + current_customer.address + current_customer.last_name + current_customer.first_name
+      redirect_to orders_confirm_path
     end
     
-    if session[:address].present? && session[:payment].present?
-      redirect_to orders_confirm_path
-    else
-      flash[:order_new] = "支払い方法と配送先を選択して下さい"
-      redirect_to new_order_path
-    end
+    # if session[:address].present? && session[:payment].present?
+    #   redirect_to orders_confirm_path
+    # else
+    #   flash[:order_new] = "支払い方法と配送先を選択して下さい"
+    #   redirect_to new_order_path
+    # end
 
   end
   # 購入確認画面
   def confirm
-      @orders = current_customer.orders
-      @total_price = calculate(current_customer)
-
-      if  session[:address].length <8
-        @address = ShipAddress.find(session[:address])
-      end
+    @order = Order.new(order_params)
   end
+
+
+  
+  # def confirm
+  #     @orders = current_customer.orders
+  #     @total_price = calculate(current_customer)
+  #     if  session[:address].length <8
+  #       @address = ShipAddress.find(session[:address])
+  #     end
+  # end
 
   # 情報入力画面にて新規配送先の登録
   def create_ship_address
@@ -92,13 +104,14 @@ class Customer::OrdersController < ApplicationController
     redirect_to thanks_path
   end
 
+  # private
+  # def shippping_address_params
+  #   params.require(:shippping_address).permit(:customer_id,:last_name, :first_name, :post_code, :address)
+  # end
   private
-   def ship_address_params
-     params.require(:ship_address).permit(:customer_id,:last_name, :first_name, :post_code, :address)
-   end
-   def order_params
-     params.require(:order).permit(:customer_id, :address, :payment, :total_price, :order_status)
-   end
+  def order_params
+    params.require(:order).permit(:payment_method, :shipping_postcode, :shipping_address, :shipping_name)
+  end
 
    # 商品合計（税込）の計算
    def calculate(user)
