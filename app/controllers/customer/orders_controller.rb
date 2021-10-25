@@ -1,7 +1,8 @@
 class Customer::OrdersController < ApplicationController
 
 before_action :authenticate_customer!
-
+  def thanks
+  end
 
   def show
     @order = Order.find(params[:id])
@@ -21,28 +22,23 @@ before_action :authenticate_customer!
   end
 
   def confirm
-    # params[:order][:payment_method] = params[:order][:payment_method].to_i
-    # # @order.payment_method = params[:order][:payment_method].to_i
     @order = Order.new
     @order.payment_method = params[:order][:payment_method].to_i
-    # binding.pry
-    # if params[:order][:payment_method] == 0
-    #   @test = 0
-    # else
-    #   @test = 1
-    # end
-
+    @cart_items = CartItem.where(customer_id: current_customer.id)
+    @sum = 0
+    # 住所選択の分岐
+      # 自分の住所
     if params[:order][:shipping_address_option] == "0"
       @order.shipping_postcode = current_customer.postcode
       @order.shipping_address = current_customer.address
-      @order.shipping_name = current_customer.first_name + current_customer.last_name
-
+      @order.shipping_name = current_customer.last_name + current_customer.first_name
+      #セレクトボックスからの選択 
     elsif params[:order][:shipping_address_option] == "1"
       shipping_address = ShippingAddress.find(params[:order][:dear_address])
       @order.shipping_postcode = shipping_address.shipping_postcode
       @order.shipping_address = shipping_address.shipping_address
       @order.shipping_name = shipping_address.shipping_name
-
+      #新規登録 
     elsif params[:order][:shipping_address_option] == "2"
       @shipping_address = ShippingAddress.new
       @shipping_address.shipping_name = params[:order][:name]
@@ -55,11 +51,9 @@ before_action :authenticate_customer!
       @order.shipping_name = params[:order][:name]
       @order.customer_id = current_customer.id
     end
-    @cart_items = CartItem.where(customer_id: current_customer.id)
-    @total_price = 0
   end
 
-    def create
+  def create
       @order = Order.new(order_params)
       @order.customer_id = current_customer.id
       @CartItems = current_customer.cart_items
@@ -70,23 +64,26 @@ before_action :authenticate_customer!
         # item(配列の宣言をしている) = []item << @order.注文詳細モデルs.new(order_id: @order.id)
         current_customer.cart_items.each do |cart_item|
           # item << @order.注文詳細モデルs.new(order_id: @order.id)
-          @orderd_item = OrderdItem.new
-          @orderd_item.order_id = @order.id  #注文商品に注文idを紐付け
-          @orderd_item.item_id = cart_item.item_id
-          @orderd_item.quantity = cart_item.quantity
-          @orderd_item.price = (cart_item.item.non_tax_price * 1.1).floor
+          @order_detail = OrderDetail.new
+          @order_detail.order_id = @order.id  #注文商品に注文idを紐付け
+          @order_detail.item_id = cart_item.item_id
+          @order_detail.quantity = cart_item.quantity
+          @order_detail.price = cart_item.item.with_tax_price
+          @order_detail.making_status = "着手不可"
         end
         current_customer.cart_items.destroy_all
-        redirect_to confirm_orders_path
+        redirect_to orders_thanks_path
       else
         flash[:alert] = "お届け先が正しく入力されていません。お届け先の入力をお願いします。"
         redirect_to  new_orders_path
       end
-    end
+  end
+    
+    
 
     private
     def order_params
-      params.require(:order).permit(:customer_id, :postcode, :address, :name, :quantity, :fee, :payment_method, :state )
+      params.require(:order).permit(:customer_id, :shipping_postcode, :shipping_address, :shipping_name, :quantity, :shipping_fee, :payment_method, :order_status )
     end
 
 end

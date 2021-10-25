@@ -1,22 +1,18 @@
 
 <!--会員側：新規注文受付、支払方法入力画面-->
-
-<div class="container my-5">
-  <div class="row">
-    <div class="offset-1">
+<div class="container ">
+  <div class="row mt-5">
+     <div class="offset-2 col-10">
       <%= flash[:order_new] %>
       <h2 class="red-border px-3">購入情報入力</h2>
     </div>
   </div>
 
+  
   <div class="row mt-5">
-    <div class="offset-2 col-5">
-
+    <div class="offset-2 col-10">
 <!-- 支払い方法選択 -->
-      <div class="row">
-        <strong class="red-border px-3">お支払い方法</strong>
-      </div>
-
+      <div class="row"><strong class="red-border px-3">お支払い方法</strong></div>
       <%= form_with model:@order, url:orders_confirm_path, method: :post do |f| %>
         <div class="form-check mt-3">
           <%= f.radio_button :payment_method, Order.payment_methods.key(0) %>
@@ -24,56 +20,62 @@
           <%= f.radio_button :payment_method, Order.payment_methods.key(1) %>
           <%= f.label :payment_method, Order.payment_methods_i18n[:transfer]%>
         </div>
+      </div>
+  </div>
 
 <!-- お届け先選択 -->
-<h4><strong>お届け先</strong></h4>
-  <!-- ログインcustomerの住所  -->
-    <div class="row-12 mt-3 ml-4">
-      <%#= f.radio_button :addresses, Order.address_methods.key(0), checked: true  %>
-      <%= f.radio_button :shipping_address_option, 0 %>
-      <%= f.label :shipping_address_option, "ご自身の住所" %>
-
-        <div class="ml-4">
-
-          <%= current_customer.postcode %>
-          <%= current_customer.address %>
-          <%= current_customer.last_name %>
-          <%= current_customer.first_name %>
+      <div class="container offset-2 col-10">
+        <strong class="red-border px-3">お届け先</strong>
+      <!-- ログインcustomerの住所  -->
+      <div class="row">
+        <div class="form-check mt-3">
+          <%= f.radio_button :shipping_address_option, 0 %>
+          <%= f.label :shipping_address_option, "ご自身の住所" %>
+          <div class="ml-4">
+            〒<%= current_customer.postcode %>
+            <%= current_customer.address %>
+            <%= current_customer.last_name %>
+            <%= current_customer.first_name %>
+          </div>
         </div>
-    </div>
-  <!-- end -->
-
-  <!-- 登録済住所 -->
-  <!--<%# if @shipping_addresses != [] %>-->
-    <div class="row-12 mt-3 ml-4">
-      <%#= f.radio_button :addresses, "shipping_addresses" %>
-      <%= f.radio_button :shipping_address_option, 1 %>
-      <%= f.label :shipping_address_option, "登録済住所から選択" %>
-      <div class="ml-4">
-        <!--collection_select(オブジェクト名, プロパティ名, オブジェクトの配列, value属性の項目, テキストの項目 [, オプション])-->
-      <%= f.select :dear_address, options_from_collection_for_select(ShippingAddress.all, :id, :full_address) %>
       </div>
-    </div>
-  <!-- end -->
-
-  <!-- 新規届け先 -->
-    <div class="row-12 mt-3 ml-4">
-    <%#= f.radio_button :addresses, "new_address" %>
-    <%= f.radio_button :shipping_address_option, 2 %>
-    <%= f.label :shipping_address_option, "新しいお届け先" %>
-    <div class="form-group row ml-3">
-    <%= f.label :"郵便番号(ハイフンなし)", class: 'col-3' %>
-    <%= f.text_field :postcode, class: 'form_control col-4' %>
-    </div>
-    <div class="form-group row ml-3">
-      <%= f.label :"住所", class: 'col-3' %>
-      <%= f.text_field  :address, class: 'form_control col-5' %>
-    </div>
-    <div class="form-group row ml-3">
-      <%= f.label :"宛名", class: 'col-3' %>
-      <%= f.text_field  :name, class: 'form_control col-5' %>
-    </div>
-  <!-- end -->
+      
+      <!-- end -->
+    
+      <!-- 登録済住所 -->
+      <div class="row">
+        <div class="form-check mt-3">
+          <%= f.radio_button :shipping_address_option, 1 %>
+          <%= f.label :shipping_address_option, "登録済住所から選択" %>
+          <div class="ml-4">
+          <%= f.select :dear_address, options_from_collection_for_select(ShippingAddress.all, :id, :full_address) %>
+          </div>
+        </div>
+      </div>
+      <!-- end -->
+      
+      <!-- 新規届け先 -->
+      <div class="row">
+        <div class="form-check">
+          <%= f.radio_button :shipping_address_option, 2 %>
+          <%= f.label :shipping_address_option, "新しいお届け先" %>
+            <div class="form-group row ml-4">
+              <%= f.label :"郵便番号(ハイフンなし)", class: 'col-3' %>
+              <%= f.text_field :postcode, class: 'form_control col-3' %>
+            </div>
+            <div class="form-group row ml-4">
+              <%= f.label :"住所", class: 'col-3' %>
+              <%= f.text_field  :address, class: 'form_control col-5' %>
+            </div>
+            <div class="form-group row ml-4">
+              <%= f.label :"宛名", class: 'col-3' %>
+              <%= f.text_field  :name, class: 'form_control col-5' %>
+            </div>
+        </div>
+      </div>
+    <!-- end -->
+  </div>
+  </div>
 
   <div class="row offset-5">
     <%= f.submit "確認画面に進む", class: "btn btn-primary text-cenrer" %>
