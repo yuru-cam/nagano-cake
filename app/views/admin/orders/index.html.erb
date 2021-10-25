@@ -1,0 +1,32 @@
+<!-- 注文一覧画面 -->
+<!--<div class="row" style="width:60%; margin:0 auto;">-->
+<h4>注文履歴一覧画面</h4>
+
+  <table class="table table-bordered">
+  	<tr>
+  		<th>購入日時</th>
+  		<th>購入者</th>
+  		<th>注文個数</th>
+  		<th>ステータス</th>
+  	</tr>
+
+
+<!--繰り返し処理の記述-->
+    <% @orders.each do |order| %>
+  	<tr>
+  	  <td><%= link_to order[:created_at].strftime("%Y-%m-%d %H:%M"), admins_order_path(order) %></td>
+  		<td><%= order.user.last_name %><%= order.customer.first_name %></td>
+  		<td><%= order.ordered_items.sum(:quantity) %></td>
+  		<td><% case order.deposit_status when "入金待ち" %>
+
+  	<!--bootstrapを利用した色の記述-->
+              <span class="badge" style="background: red;"><%= order.deposit_status %></span>
+          <% when "発送待ち" %>
+              <span class="badge" style="background: green;"><%= order.deposit_status %></span>
+              <% when "発送済み" %>
+              <span class="badge" style="background: blue;"><%= order.deposit_status %></span>
+        <% end %></td>
+  	 </tr>
+    <% end %>
+  </table>
+</div>

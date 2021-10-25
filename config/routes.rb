@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     root to: 'homes#top' 
     get '/about' => 'homes#about'
     resources :cart_items, only: [:destroy, :create, :index, :update]
-    delete 'cart_items/clear' => 'cart_items#clear'
+    delete 'cart_items' => 'cart_items#clear' ,as: 'clear'
     resources :items, only: [:index, :show]
     resource :customers, only: [:show, :edit, :update]
     get 'customers/confirm' => 'customers#confirm'
@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     resources :orders, only: [:new, :create, :index, :show]
     get 'orders/thanks' => 'orders#thanks'
     post 'orders/confirm' => 'orders#confirm'
-    resources :addresses, only: [:create, :index, :destroy, :edit, :update]
+    resources :shipping_addresses, only: [:create, :index, :destroy, :edit, :update]
   end
   
     
