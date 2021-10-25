@@ -1,9 +1,9 @@
-<div class="title">
+<div class="title", style="margin: 20px 60px;">
   <h4><%= @customer.full_name %>さんの会員詳細</h4>
 </div>
 
 
-<table class="information">
+<table class="information", style="margin: 10px 60px;">
   <tr>
     <th>会員ID</th>
     <td><%= @customer.id%></td>
@@ -43,15 +43,21 @@
     <th>会員ステータス</th>
     <td>
       <% if @customer.is_deleted == false %>
-        有効
+        <span style="color: green">有効</span>
       <% else %>
-        退会
+        <span style="opacity: 0.5">退会</span>
       <% end %>
     </td>
   </tr>
-
+  
+  <tr>
+    <th></th>
+    <td><%= link_to "編集する", edit_admin_customer_path(@customer.id), class: "btn btn-success" %></td>
+    <td><%= link_to "注文履歴一覧を見る", admin_root_path, class: "btn btn-primary" %></td>
+  </tr>
 </table>
 
-<%= link_to "編集する", edit_admin_customer_path(@customer.id), class: "btn btn-success" %>
 
-<%= link_to "注文履歴一覧を見る", admin_root_path, class: "btn btn-primary" %>
+
+
+

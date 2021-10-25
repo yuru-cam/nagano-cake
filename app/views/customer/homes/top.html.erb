@@ -1,5 +1,5 @@
 <div class="container">
-  
+
   <div class="row">
     <div class="col-md-2">
       <div class="genres">
@@ -9,7 +9,7 @@
         <% end %>
       </div>
     </div>
-    
+
     <div class="col-md-10">
       <div class="introduction">
         <p>
@@ -19,7 +19,7 @@
           購入には会員登録が必要になります。
         </p>
       </div>
-      
+
       <div class="new-items">
         <h3>新着商品</h3>
         <div class="col d-flex flex-wrap wrap">
@@ -34,12 +34,12 @@
           <% end %>
         </div>
       </div>
-      
+
       <%= paginate @items %>
       <%= link_to "全ての商品を見る>", items_path %>
     </div>
-    
-    
+
+
   </div>
 </div>
 
