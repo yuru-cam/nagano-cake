@@ -23,23 +23,22 @@ class Customer::OrdersController < ApplicationController
 
 # 顧客の購入情報の入力画面
 	def new
-		@ship_addresses = current_customer.shipping_addresses
-    @ship_address = ShippingAddress.new
+		# @shiping_addresses = current_customer.shipping_addresses
+    @shipping_address = ShippingAddress.new
     @order = Order.new
 	end
 
 #情報入力画面でボタンを押して情報をsessionに保存
   def create
-    session[:payment_method] = params[:payment_method]
     if
-      params[:select] == "1"
-      session[:shipping_address] = params[:shipping_address]
-      session[:shipping_name] = params[:shipping_name]
-      session[:shipping_postcode] = params[:shipping_postcode]
+      params[:order][:select_address] == "0"
+      @order.shipping_address = current_customer.address
+      @order.shipping_name = current_customer.name
+      @order.shipping_postcode = current_customer.postcode
       redirect_to orders_confirm_path
     elsif 
-      params[:select] == "2"
-      p session[:shipping_address] = params[:full_address]
+      params[:order][:select]== "1"
+       @order.shipping_address = params[:]
       "〒" + current_customer.postcode + current_customer.address + current_customer.last_name + current_customer.first_name
       redirect_to orders_confirm_path
     end
@@ -109,17 +108,8 @@ class Customer::OrdersController < ApplicationController
   #   params.require(:shippping_address).permit(:customer_id,:last_name, :first_name, :post_code, :address)
   # end
   private
-  def order_params
-    params.require(:order).permit(:payment_method, :shipping_postcode, :shipping_address, :shipping_name)
-  end
-
-   # 商品合計（税込）の計算
-   def calculate(user)
-     total_price = 0
-     user.cart_items.each do |cart_item|
-       total_price += cart_item.quantity * cart_item.item.price
-     end
-     return (total_price * 1.1).floor
-   end
+    def order_params
+      params.require(:order).permit(:payment_method, :shipping_postcode, :shipping_address, :shipping_name)
+    end
 
 end
