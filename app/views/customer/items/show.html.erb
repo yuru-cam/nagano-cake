@@ -14,7 +14,7 @@
             <div class="col-6">
                 <h3><%= @item.name %></h3>
                 <p><%= @item.body %></p>
-                <p>¥<%= ((@item.price*1.08).floor).to_s(:delimited, delimiter: ',') %>円（税込）</p>
+                <p>¥<%= ((@item.price*1.1).floor).to_s(:delimited, delimiter: ',') %>円（税込）</p>
                 <%= form_with model:@cart_item , url: cart_items_path, method: :post do |f| %>
                     <%= f.hidden_field :item_id, :value => @item.id %>
                     <%= f.hidden_field :customer_id, :value => current_customer.id %>
