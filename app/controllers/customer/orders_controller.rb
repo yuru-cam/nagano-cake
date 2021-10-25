@@ -1,111 +1,89 @@
 class Customer::OrdersController < ApplicationController
 
-#管理者とログインユーザーのみ閲覧可の記述
-	before_action :authenticate!
-
-#退会済みユーザーは閲覧不可の記述
- 	before_action :customer_is_deleted
-
-#param[:id]が取得できない場合、閲覧不可
- 	before_action :params_check, only: [:index]
-
-
-# 注文一覧
-	def index
-		@customer = Customer.find(params[:id])
-	end
-
-# 注文履歴詳細
-	def show
-	 	@order = Order.find(params[:id])
-		@order_details = @order.order_details
-	end
-
-# 顧客の購入情報の入力画面
-	def new
-		@ship_addresses = current_customer.ship_addresses
-    @ship_address = ShipAddress.new
-    @order = Order.new
-	end
-
-#情報入力画面でボタンを押して情報をsessionに保存
-  def create
-    session[:payment] = params[:payment]
-    if params[:select] == "select_address"
-      session[:address] = params[:address]
-    elsif params[:select] == "my_address"
-      session[:address] ="〒" +current_customer.post_code+current_customer.address+current_customer.last_name+current_customer.first_name
-    end
-    if session[:address].present? && session[:payment].present?
-      redirect_to orders_confirm_path
-    else
-      flash[:order_new] = "支払い方法と配送先を選択して下さい"
-      redirect_to new_order_path
-    end
-
+before_action :authenticate_customer!
+  def thanks
   end
-  # 購入確認画面
-  def confirm
-      @orders = current_customer.orders
-      @total_price = calculate(current_customer)
 
-      if  session[:address].length <8
-        @address = ShipAddress.find(session[:address])
+  def show
+    @order = Order.find(params[:id])
+    @orderd_items = OrderdItem.where(order_id: params[:id])
+    @cart_items = current_customer.cart_items
+  end
+
+  def index
+    # ログイン中の顧客の情報を取得
+    @orders = current_customer.orders
+  end
+
+  def new
+    @customer = current_customer
+    @order_address = current_customer.address
+    @order = Order.new
+  end
+
+  def confirm
+    @order = Order.new
+    @order.payment_method = params[:order][:payment_method].to_i
+    @cart_items = CartItem.where(customer_id: current_customer.id)
+    @sum = 0
+    # 住所選択の分岐
+      # 自分の住所
+    if params[:order][:shipping_address_option] == "0"
+      @order.shipping_postcode = current_customer.postcode
+      @order.shipping_address = current_customer.address
+      @order.shipping_name = current_customer.last_name + current_customer.first_name
+      #セレクトボックスからの選択 
+    elsif params[:order][:shipping_address_option] == "1"
+      shipping_address = ShippingAddress.find(params[:order][:dear_address])
+      @order.shipping_postcode = shipping_address.shipping_postcode
+      @order.shipping_address = shipping_address.shipping_address
+      @order.shipping_name = shipping_address.shipping_name
+      #新規登録 
+    elsif params[:order][:shipping_address_option] == "2"
+      @shipping_address = ShippingAddress.new
+      @shipping_address.shipping_name = params[:order][:name]
+      @shipping_address.shipping_postcode = params[:order][:postcode]
+      @shipping_address.shipping_address = params[:order][:address]
+      @shipping_address.customer_id = current_customer.id
+      @shipping_address.save
+      @order.shipping_postcode = params[:order][:postcode]
+      @order.shipping_address = params[:order][:address]
+      @order.shipping_name = params[:order][:name]
+      @order.customer_id = current_customer.id
+    end
+  end
+
+  def create
+      @order = Order.new(order_params)
+      @order.customer_id = current_customer.id
+      @CartItems = current_customer.cart_items
+
+      if  @order.save
+        #注文受けた　→ 注文詳細テーブルに情報を入れている作業(order_detail)
+        #制作ステータスに０を入れる作業が必要
+        # item(配列の宣言をしている) = []item << @order.注文詳細モデルs.new(order_id: @order.id)
+        current_customer.cart_items.each do |cart_item|
+          # item << @order.注文詳細モデルs.new(order_id: @order.id)
+          @order_detail = OrderDetail.new
+          @order_detail.order_id = @order.id  #注文商品に注文idを紐付け
+          @order_detail.item_id = cart_item.item_id
+          @order_detail.quantity = cart_item.quantity
+          @order_detail.price = cart_item.item.with_tax_price
+          @order_detail.making_status = "着手不可"
+        end
+        current_customer.cart_items.destroy_all
+        redirect_to orders_thanks_path
+      else
+        flash[:alert] = "お届け先が正しく入力されていません。お届け先の入力をお願いします。"
+        redirect_to  new_orders_path
       end
   end
+    
+    
 
-  # 情報入力画面にて新規配送先の登録
-  def create_ship_address
-    @ship_address = ShipAddress.new(ship_address_params)
-    @ship_address.customer_id = current_customer.id
-    @ship_address.save
-    redirect_to new_order_path
-  end
-
-
-  def create_order
-    # オーダーの保存
-    @order = Order.new
-    @order.customer_id = current_customer.id
-    @order.address = session[:address]
-    @order.payment = session[:payment]
-    @order.total_price = calculate(current_customer)
-    @order.order_status = 0
-    @order.save
-    # saveができた段階でOrderモデルにorder_idが入る
-
-    # オーダー商品ごとの詳細の保存
-    current_customer.cart_items.each do |cart|
-      @order_detail = OrderDetail.new
-      @order_detail.order_id = @order.id
-      @order_detail.item_name = cart.item.name
-      @order_detail.item_price = cart.item.price
-      @order_detail.quantity = cart.quantity
-      @order_detail.item_status = 0
-      @order_detail.save
-
+    private
+    def order_params
+      params.require(:order).permit(:customer_id, :shipping_postcode, :shipping_address, :shipping_name, :quantity, :shipping_fee, :payment_method, :order_status )
     end
-    current_customer.cart_items.destroy_all
-    session.delete(:address)
-    session.delete(:payment)
-    redirect_to thanks_path
-  end
-
-  private
-   def ship_address_params
-     params.require(:ship_address).permit(:customer_id,:last_name, :first_name, :post_code, :address)
-   end
-   def order_params
-     params.require(:order).permit(:customer_id, :address, :payment, :total_price, :order_status)
-   end
-
-   # 商品合計（税込）の計算
-   def calculate(user)
-     total_price = 0
-     user.cart_items.each do |cart_item|
-       total_price += cart_item.quantity * cart_item.item.price
-     end
-     return (total_price * 1.1).floor
-   end
 
 end
