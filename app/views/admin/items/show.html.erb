@@ -4,7 +4,7 @@
         <div class="row">
             <%= attachment_image_tag @item, :item_image, size:'300x300' %>
         </div>
-        
+
         <div class="col">
         <table class="new-form-table">
           <tbody>
@@ -12,22 +12,22 @@
               <th>商品名</th>
               <td><%= @item.name %></td>
             </tr>
-            
+
             <tr>
               <th>商品説明</th>
               <td><%= @item.body %></td>
             </tr>
-            
+
             <tr>
               <th>ジャンル</th>
               <td><%= @item.genre.name %></td>
             </tr>
-            
+
             <tr>
               <th>税抜価格</th>
               <td><%= @item.price %></td>
             </tr>
-            
+
             <tr>
               <th>販売ステータス</th>
               <td>
@@ -47,6 +47,6 @@
           </tbody>
         </table>
         </div>
-        
+
     </div>
 </div>
