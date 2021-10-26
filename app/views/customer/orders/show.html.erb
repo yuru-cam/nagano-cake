@@ -64,17 +64,17 @@
               <% @order.order_details.each do |order_detail| %>
                <% @sum += order_detail.price %>
                <% end %>
-              <td><%= @sum %></td>
+              <td><%= @sum.to_s(:delimited, delimiter: ',') %></td>
             </tr>
 
             <tr class="brown-border">
               <td>配送料</td>
-              <td><%= 800 %></td>
+              <td><%= @order.shipping_fee.to_s(:delimited, delimiter: ',') %></td>
             </tr>
 
             <tr class="brown-border">
               <td>ご請求額</td>
-              <td><%= @sum + 800  %></td>
+              <td><%= (@sum + 800).to_s(:delimited, delimiter: ',')  %></td>
             </tr>
           </tbody>
         </table>
@@ -106,9 +106,9 @@
         <tbody>
           <tr class="brown-border">
             <td><%= d.item.name %></td>
-            <td><%= (d.item.price * 1.1).floor %></td>
+            <td><%= (d.item.with_tax_price).to_s(:delimited, delimiter: ',') %></td>
             <td><%= d.quantity %></td>
-            <td><%= ((d.item.price * d.quantity) * 1.1).floor %></td>
+            <td><%= (((d.item.price * d.quantity) * 1.1).floor).to_s(:delimited, delimiter: ',') %></td>
           </tr>
         </tbody>
         <% end %>
