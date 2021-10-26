@@ -46,7 +46,7 @@
         <tbody>
           <tr class="brown-border">
             <td>送料</td>
-            <td>800</td>
+            <td><%= @order.shipping_fee %></td>
           </tr>
 
           <tr class="brown-border">
@@ -55,7 +55,7 @@
           </tr>
           <tr class="brown-border">
             <td>請求金額</td>
-            <td><%= @sum + 800 %></td>
+            <td><%= @sum + @order.shipping_fee %></td>
           </tr>
         </tbody>
       </table>
@@ -98,7 +98,7 @@
 		<%= f.hidden_field :shipping_name,:value => @order.shipping_name %>
 		<%= f.hidden_field :total_fee ,:value => @sum %><br><br>
 		<div class="text-center">
-		<%= f.submit "購入を確定する", class: "btn btn-success text-cenrer btn-lg" %>
+		<%= f.submit "注文を確定する", class: "btn btn-success text-cenrer btn-lg" %>
 		<% end %>
     </div>
     

@@ -1,6 +1,5 @@
 <div class="container">
     <div class="row">
-
         <div class="col">
         <h2>商品一覧</h2>
         <table class="table">
@@ -29,10 +28,10 @@
                     </td>
                 </tr>
                 <% end %>
-            <%= paginate @items %>
             </tbody>
         </table>
+        <%= link_to "新規作成" , new_admin_item_path , class: "btn btn-primary" %></br>
+        <%= paginate @items %>
         </div>
-
     </div>
 </div>
