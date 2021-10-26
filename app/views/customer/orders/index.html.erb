@@ -33,10 +33,7 @@
                 <% end %>
               </td>
               <td class="align-middle">
-                <% order.order_details.each do |order_detail| %>
-                <% @sum += order_detail.price %>
-                <% end %>
-                <%= @sum %>
+                <%= (order.order_details.sum(:price) + order.shipping_fee).to_s(:delimited, delimiter: ',') %>
               </td>
               <td class="align-middle">
                 <%= order.order_status %>
@@ -45,7 +42,7 @@
                 <%=link_to "表示する", order_path(order), class: "btn btn-sm btn-outline-danger" %>
               </td>
             </tr>
-          <% end %>
+            <% end %>
         </tbody>
 
       </table>
