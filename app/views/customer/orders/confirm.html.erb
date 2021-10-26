@@ -46,16 +46,16 @@
         <tbody>
           <tr class="brown-border">
             <td>送料</td>
-            <td><%= @order.shipping_fee %></td>
+            <td><%=(@order.shipping_fee).to_i %></td>
           </tr>
 
           <tr class="brown-border">
             <td>商品合計</td>
-            <td><%= @sum %></td>
+            <td><%= @sum.to_i %></td>
           </tr>
           <tr class="brown-border">
             <td>請求金額</td>
-            <td><%= @sum + @order.shipping_fee %></td>
+            <td><%= @sum + (@order.shipping_fee).to_i %></td>
           </tr>
         </tbody>
       </table>
