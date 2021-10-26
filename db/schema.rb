@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 2021_10_23_110509) do
 
   create_table "order_details", force: :cascade do |t|
     t.integer "order_id"
-    t.integer "item_id"
+    t.integer "item_id
     t.integer "quantity"
     t.integer "price"
     t.integer "making_status"

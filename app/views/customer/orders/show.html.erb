@@ -26,19 +26,19 @@
 
             <tr class="brown-border">
               <td>配送先</td>
-              <% if @order.address.length <8 %>
-              <% ship_address = ShippingAddress.find(@order.address) %>
+              <% if @order.shipping_address.length <8 %>
+              <% #ship_address = ShippingAddress.find(@order.shipping_address) %>
               <td>
-                <%= "〒" + shipping_address.postcode + "  " + shipping_address.address + "  " + shipping_address.last_name + shipping_address.first_name %>
+                <%= "〒" + @order.shipping_postcode + "  " + @order.shipping_address + "  " + @order.shipping_name  %>
               </td>
               <% else %>
-              <td><%= @order.address %></td>
+              <td><%= @order.shipping_address %></td>
               <% end %>
             </tr>
 
             <tr class="brown-border">
               <td>支払い方法</td>
-              <td><%= @order.payment %></td>
+              <td><%= @order.payment_method_i18n %></td>
             </tr>
 
             <tr class="brown-border">
@@ -61,17 +61,20 @@
           <tbody>
             <tr class="brown-border">
               <td>商品合計</td>
-              <td><%= @order.total_price  %></td>
+              <% @order.order_details.each do |order_detail| %>
+               <% @sum += order_detail.price %>
+               <% end %>
+              <td><%= @sum.to_s(:delimited, delimiter: ',') %></td>
             </tr>
 
             <tr class="brown-border">
               <td>配送料</td>
-              <td><%= 800 %></td>
+              <td><%= @order.shipping_fee.to_s(:delimited, delimiter: ',') %></td>
             </tr>
 
             <tr class="brown-border">
               <td>ご請求額</td>
-              <td><%= @order.total_price + 800  %></td>
+              <td><%= (@sum + 800).to_s(:delimited, delimiter: ',')  %></td>
             </tr>
           </tbody>
         </table>
@@ -102,10 +105,10 @@
         <% @order_details.each do |d| %>
         <tbody>
           <tr class="brown-border">
-            <td><%= d.item_name %></td>
-            <td><%= (d.item_price * 1.1).floor %></td>
+            <td><%= d.item.name %></td>
+            <td><%= (d.item.with_tax_price).to_s(:delimited, delimiter: ',') %></td>
             <td><%= d.quantity %></td>
-            <td><%= ((d.item_price * d.quantity) * 1.1).floor %></td>
+            <td><%= (((d.item.price * d.quantity) * 1.1).floor).to_s(:delimited, delimiter: ',') %></td>
           </tr>
         </tbody>
         <% end %>
