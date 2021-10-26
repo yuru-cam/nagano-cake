@@ -1,39 +1,74 @@
 <header>
-  <div>
-    <!--ロゴ-->
+  <div id="mainArea">
+    <%= link_to image_tag("naganocake.png", size: "120x120") , root_path %>
+  </div>
+
+
+   <!--ロゴ-->
     <!--<div class="container-fluid">-->
     <!--    <h1>Cemal Can Dinça</h1>-->
     <!--    <p><a class="btn btn-primary btn-lg" href="#" role="button">CONTACT ME</a></p>-->
     <!--</div>-->
         <div class="jumbotron jumbotron-extend">
         <div class="container-fluid jumbotron-container">
-        <h1 class="site-name">Nagano Cake</h1>
-        <p><a class="btn btn-black" href="#" role="button">最高のケーキとのひとときを。</a></p>
+        <h1 class="site-name">最高なケーキとのひとときを。</h1>
+        <!--<p><a class="btn btn-black" href="#" role="button">最高のケーキとのひとときを。</a></p>-->
     </div>
 
-    <div>
-      <ul class="navbar-nav mr-auto">
-      <nav class="navbar-default" >
-      <ul class="nav-link">
-      <%= link_to image_tag("naganocake.png", size: "200x200") , root_path %>
-      </ul>
+
+    <!--<div>-->
+    <!--  <ul class="navbar-nav mr-auto">-->
+    <!--  <nav class="navbar-default" >-->
+    <!--  <ul class="nav-link">-->
+    <!--  <%#= link_to image_tag("naganocake.png", size: "200x200") , root_path %>-->
+    <!--  </ul>-->
+    <!--</div>-->
 
     <!--案内-->
       <!--<ul class="navbar-nav ml-auto">-->
         <% if customer_signed_in? %>
         <!--カスタマーがログインしている時 -->
+  <div class="wrapper">
+  <input type="checkbox" id="menuToggler" class="input-toggler" value="1" autofocus="true"/>
+  <label for="menuToggler" id="menuTogglerLabel" class="menu-toggler" role="button" aria-pressed="false" aria-expanded="false" aria-label="Navigation button">
+    <span class="menu-toggler__line"></span>
+    <span class="menu-toggler__line"></span>
+    <span class="menu-toggler__line"></span>
+  </label>
+  <nav id="sidebar" class="sidebar" role="navigation" aria-labelledby="menuTogglerLabel" aria-hidden="true">
+    <ul id="menubar" class="menu" role="menubar" aria-orientation="vertical">
+      <li class="nav-link"><%= link_to "Mypage", customers_path, class: "nav-link" %></li>
+        　<li class="nav-link"><%= link_to "Cakelist", items_path, class: "nav-link" %></li>
+        　<li class="nav-link"><%= link_to "YourCart", cart_items_path, class: "nav-link" %></li>
+        　<li class="nav-link"><%= link_to "logout", destroy_customer_session_path, method: :delete, class: "nav-link" %></li>
+      <!--<li class="menu__item" role"none"><a class="menu__link" href="#" role="menuitem" tabindex="-1">Home</a></li>-->
+      <!--<li class="menu__item" role"none"><a class="menu__link" href="#" role="menuitem" tabindex="-1">Blog</a></li>-->
+      <!--<li class="menu__item" role"none"><a class="menu__link" href="#" role="menuitem" tabindex="-1">Portfolio</a></li>-->
+      <!--<li class="menu__item" role"none"><a class="menu__link" href="#" role="menuitem" tabindex="-1">About</a></li>-->
+      <!--<li class="menu__item" role"none"><a class="menu__link" href="#" role="menuitem" tabindex="-1">Contact</a></li>-->
+    </ul>
+  </nav>
+  <!--<main class="content">-->
+  <!--  <h1>CSS sidebar toggle</h1>-->
+  <!--  <p>Pure CSS solution for hiding and showing sidebar.</p>-->
+  <!--</main>-->
+</div>
+<!--<a class="sb-link" href="//silvestar.codes/articles/css-sidebar-toggle/">silvestar.codes</a>-->
+
         <ul class="nav pull-right nav-pills">
         　<p class="text-center">
-        　<h5 class="text-white">
-        　  <li class="nav-link">Welcome,<%= current_customer.last_name + current_customer.first_name %>！</li>
-        　</h5>
+        　<h3 class="text-white">
+        　  <li class="name-link">Welcome,<%= current_customer.last_name + current_customer.first_name %>！</li>
+        　</h3>
         　</p>
-        　<br/>
-        　<li class="nav-link"><%= link_to "Mypage", customers_path %></li>
-        　<li class="nav-link"><%= link_to "Cakelist", items_path %></li>
-        　<li class="nav-link"><%= link_to "YourCart", cart_items_path %></li>
-        　<li class="nav-link"><%= link_to "logout", destroy_customer_session_path, method: :delete %></li>
-        </ul>
+        　</ul>
+        　<br />
+        <!--<ul class="nav pull-right nav-pills">-->
+        <!--　<li class="nav-link"><%#= link_to "Mypage", customers_path %></li>-->
+        <!--　<li class="nav-link"><%#= link_to "Cakelist", items_path %></li>-->
+        <!--　<li class="nav-link"><%#= link_to "YourCart", cart_items_path %></li>-->
+        <!--　<li class="nav-link"><%#= link_to "logout", destroy_customer_session_path, method: :delete %></li>-->
+        <!--</ul>-->
 
         <% elsif admin_signed_in? %>
         <!--管理者がログインしている時-->
@@ -43,16 +78,17 @@
          <li class="nav-link"><%= link_to "注文履歴一覧", admin_root_path %></li>
          <li class="nav-link"><%= link_to "ジャンル一覧", admin_genres_path %></li>
          <li class="nav-link"><%= link_to "ログアウト", destroy_admin_session_path, method: :delete %></li>
-
+        <ul>
         <% else %>
         <!-- ログインしていない時 -->
+
         <ul class="nav pull-right nav-pills">
           <li class="nav-link"><%= link_to "About", about_path %></li>
-          <li class="nav-link"><%= link_to "商品一覧", items_path %></li>
-          <li class="nav-link"><%= link_to "新規登録", new_customer_registration_path %></li>
-          <li class="nav-link"><%= link_to "ログイン", new_customer_session_path %></li>
+          <li class="nav-link"><%= link_to "Cakelist", items_path %></li>
+          <li class="nav-link"><%= link_to "Signin", new_customer_registration_path %></li>
+          <li class="nav-link"><%= link_to "Login", new_customer_session_path %></li>
         <% end %>
-      </ul>
+        </ul>
     </nav>
     </div>
   </div>

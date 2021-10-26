@@ -1,28 +1,31 @@
-<div class="mx-auto" style="width: 200px;">
+<div class="mx-auto" style="width: 500px;">
 <div class="container">
 
-  <div class="row">
-    <!--<div class="col-md-2">-->
-      <div class="genres">
-        <h6>ジャンル検索</h6>
-        <% @genres.each do |genre| %>
-          <p><%= genre.name %></p>
-        <% end %>
-      <!--</div>-->
-    </div>
 
-    <!--<div class="col-md-10">-->
+
+    <div class="col-md-15">
       <div class="introduction">
         <p>
+          <ul class="nav pull-right nav-pills">
           ようこそ、ながのCAKEへ！<br />
           このサイトは、ケーキ販売のECサイトになります。<br />
           会員でない方も商品の閲覧はできますが、<br />
           購入には会員登録が必要になります。
+          </ul>
         </p>
       </div>
 
+
+    </div>
       <div class="new-items">
         <h3>新着商品</h3>
+        <div class="row">
+    <!--<div class="col-md-2">-->
+      <div class="genres">
+        <!--<h6>ジャンル検索</h6>-->
+        <% @genres.each do |genre| %>
+          <p><%= genre.name %></p>
+        <% end %>
         <div class="col d-flex flex-wrap wrap">
           <% @items.each do |item| %>
           <div class="items", style="padding-right: 10px; padding-left: 0px; margin: 10px 0;">
