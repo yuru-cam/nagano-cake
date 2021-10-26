@@ -1,46 +1,107 @@
-<div class="mx-auto" style="width: 500px;">
+<div class="mx-auto" style="width: 2000px;">
 <div class="container">
 
 
 
     <div class="col-md-15">
       <div class="introduction">
-        <p>
-          <ul class="nav pull-right nav-pills">
-          ようこそ、ながのCAKEへ！<br />
-          このサイトは、ケーキ販売のECサイトになります。<br />
-          会員でない方も商品の閲覧はできますが、<br />
-          購入には会員登録が必要になります。
-          </ul>
-        </p>
+        <!--改行代わりの空白分-->
+      　　<p class="text-center">　　　　　　　　　　　　</p>
+        <span style="color:white">
+          <p class="text-center">ようこそ、ながのCAKEへ！</p>
+          <p class="text-center">このサイトは、ケーキ販売のECサイトになります。</p>
+          <p class="text-center">会員でない方も商品の閲覧はできますが、</p>
+          <p class="text-center">購入には会員登録が必要になります。</p>
+        </span>
       </div>
-
-
     </div>
+    
+    
+    <!--改行代わりの空白分-->
+      　　<p class="text-center">　　　　　　　　　　　　</p>
+    
+    
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+  <% @genres.each do |genre| %>
+          <p> 検索結果： <%= genre.name %></p>
+        <% end %>
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+    
+    
+    <!--改行代わりの空白分-->
+      　　<p class="text-center">　　　　　　　　　　　　</p>
+    
       <div class="new-items">
-        <h3>新着商品</h3>
-        <div class="row">
+        <button type="button" class="btn btn-outline-light">新着商品</button>
+
+
+
+
+<!--改行代わりの空白分-->
+      　　<p class="text-center">　　　　　　　　　　　　</p>
+      　　
+      　　
+      　　
+
+        <!--<div class="row">-->
     <!--<div class="col-md-2">-->
       <div class="genres">
         <!--<h6>ジャンル検索</h6>-->
         <% @genres.each do |genre| %>
-          <p><%= genre.name %></p>
+          <!--<p><%#= genre.name %></p>-->
         <% end %>
         <div class="col d-flex flex-wrap wrap">
           <% @items.each do |item| %>
           <div class="items", style="padding-right: 10px; padding-left: 0px; margin: 10px 0;">
             <%= link_to item_path(item.id) do %>
-              <%= attachment_image_tag item, :item_image, size:"150x150" %>
+
+            <div class="card">
+              <%= attachment_image_tag item, :item_image, size:"318x200" %>
+              <!--<%#= attachment_image_tag item, :item_image, size:"150x150" %>-->
+            <div class="card-body">
+            </div>
             <% end %>
-            <p><%= item.name %></p>
-            <p><%= item.price %></p>
+            
+              <p class="text-center">
+                　　<%= item.name %>
+                <!--改行代わりの空白分-->
+      　　      <p class="text-center">
+                ￥<%= item.price %>
+              </p>
+
+            </div>
+
           </div>
           <% end %>
         </div>
       </div>
 
-      <%= paginate @items %>
-      <%= link_to "全ての商品を見る>", items_path %>
+
+
+
+
+<nav class="navbar bottom navbar-dark bg-dark">
+  <a class="navbar-brand" <p class="text-center"><%= paginate @items %><%= link_to "全ての商品を見る▶︎", items_path %></p>
+  </a>
+</nav>
+      
+      
+      
     </div>
 
 

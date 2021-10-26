@@ -1,10 +1,18 @@
-<h3>新規会員登録</h3>
+<!--改行代わりの空白分-->
+  <p class="text-center">　　　　　　　　　　　　</p>
+
+<button type="button" class="btn btn-outline-light">新規会員登録</button>
+
+<!--改行代わりの空白分-->
+  <p class="text-center">　　　　　　　　　　　　</p>
+
+<span style="color:white">
 
 <%= form_with model: @customer, url: customer_registration_path, id: 'new_customer', class: 'new_customer', local: true do |f| %>
   <%= render "customer/shared/error_messages", resource: resource %>
-  
+
   <!--姓-->
-  <div class="field"> 　
+  <div class="field">
     <%= f.label :last_name %>
     <%= f.text_field :last_name, autofocus: true, placeholder: "令和" %>
   </div>
@@ -32,7 +40,7 @@
     <%= f.label :email %>
     <%= f.email_field :email, autocomplete: "email" ,placeholder: "sample@example.com" %>
   </div>
-  
+
   <!--郵便番号(ハイフンなし)-->
   <div class="field">
     <%= f.label :postcode %>
@@ -44,7 +52,7 @@
     <%= f.label :address %>
     <%= f.text_field :address ,placeholder: "東京都渋谷区代々木神園町0-0" %>
   </div>
-  
+
 
   <!--電話番号(ハイフンなし)-->
   <div class="field">
@@ -72,10 +80,19 @@
   </div>
 <% end %>
 
+<!--改行代わりの空白分-->
+  <p class="text-center">　　　　　　　　　　　　</p>
 
-<h3>既に登録済みの方</h3>
+<button type="button" class="btn btn-outline-light">既に登録済みの方</button>
 
 <p>
   <%= render "customer/shared/links" %>
   からログインしてください。
 </p>
+
+</span>
+
+<!--改行代わりの空白分-->
+  <p class="text-center">　　　　　　　　　　　　</p>
+<!--改行代わりの空白分-->
+  <p class="text-center">　　　　　　　　　　　　</p>
