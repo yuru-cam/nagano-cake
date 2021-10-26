@@ -12,23 +12,21 @@ class Admin::OrdersController < ApplicationController
 
   def show
   	@order = Order.find(params[:id])
-    @items = @order.ordered_items
+    @order_details = @order.order_details
   end
 
   def update
-#orderのdeposit_statusの更新
+    #orderのoeder_statusの更新
   	@order = Order.find(params[:id])
     @order.update(order_params)
     flash[:success] = "更新に成功しました"
-  	redirect_to admins_orders_path
+    if @order.order_status == "入金確認"
+			  @order.order_details.update_all(making_status: "製作待ち") end
+		redirect_to admin_order_path
   end
 
   private
   def order_params
-  	params.require(:order).permit(:deposit_status,ordered_items_attributes:[:id, :product_status])
+  	params.require(:order).permit(:order_status,ordered_details_attributes:[:id, :making_status])
   end
-
-
-
-
 end
