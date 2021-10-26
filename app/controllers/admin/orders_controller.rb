@@ -6,7 +6,7 @@ class Admin::OrdersController < ApplicationController
     if params[:day]
       @orders = Order.created_today
     else
-  	   @orders = Order.all
+      @orders = Order.all
     end
   end
 

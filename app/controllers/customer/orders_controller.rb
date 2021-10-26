@@ -6,13 +6,15 @@ before_action :authenticate_customer!
 
   def show
     @order = Order.find(params[:id])
-    @orderd_items = OrderdItem.where(order_id: params[:id])
+    @order_details = OrderDetail.where(order_id: params[:id])
     @cart_items = current_customer.cart_items
+    @sum = 0
   end
 
   def index
     # ログイン中の顧客の情報を取得
     @orders = current_customer.orders
+    @sum = 0
   end
 
   def new
@@ -70,6 +72,7 @@ before_action :authenticate_customer!
           @order_detail.quantity = cart_item.quantity
           @order_detail.price = cart_item.item.with_tax_price
           @order_detail.making_status = "着手不可"
+          @order_detail.save
         end
         current_customer.cart_items.destroy_all
         redirect_to orders_thanks_path
