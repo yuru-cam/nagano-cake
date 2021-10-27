@@ -53,7 +53,7 @@
           <%= f.radio_button :shipping_address_option, 1 %>
           <%= f.label :shipping_address_option, "登録済住所から選択" %>
           <div class="ml-4">
-          <%= f.select :dear_address, options_from_collection_for_select(ShippingAddress.all, :id, :full_address) %>
+          <%= f.select :dear_address, options_from_collection_for_select(@select_address, :id, :full_address) %>
           </div>
         </div>
       </div>

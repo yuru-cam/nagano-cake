@@ -20,6 +20,7 @@ class Customer::OrdersController < ApplicationController
   def new
     @customer = current_customer
     @order_address = current_customer.address
+    @select_address = ShippingAddress.where(customer_id: current_customer.id)
     @order = Order.new
   end
 
