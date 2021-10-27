@@ -1,6 +1,10 @@
 <header>
   <div id="mainArea">
-    <%= link_to image_tag("naganocake.png", size: "120x120") , root_path %>
+    <% if customer_signed_in? %>
+      <%= link_to image_tag("naganocake.png", size: "120x120") , root_path %>
+        <% else %>
+        <%= link_to image_tag("naganocake.png", size: "120x120") , admin_root_path %>
+    <% end %>
   </div>
 
 
@@ -41,13 +45,10 @@
         　<li class="nav-link"><%= link_to "Cakelist", items_path, class: "nav-link" %></li>
         　<li class="nav-link"><%= link_to "YourCart", cart_items_path, class: "nav-link" %></li>
         　<li class="nav-link"><%= link_to "logout", destroy_customer_session_path, method: :delete, class: "nav-link" %></li>
-
     </ul>
   </nav>
-
 </div>
 <!--<a class="sb-link" href="//silvestar.codes/articles/css-sidebar-toggle/">silvestar.codes</a>-->
-
         <ul class="nav pull-right nav-pills">
         　<p class="text-center">
         　<h3 class="text-white">
@@ -56,9 +57,6 @@
         　</p>
         　</ul>
         　<br />
-
-
-
         <% elsif admin_signed_in? %>
         <!--管理者がログインしている時-->
          <div class="wrapper">
@@ -78,6 +76,14 @@
         <ul>
     </nav>
     </div>
+    <ul class="nav pull-right nav-pills">
+        　<p class="text-center">
+        　<h3 class="text-white">
+        　  <li class="name-link">Welcome,管理者様！</li>
+        　</h3>
+        　</p>
+        　</ul>
+        　<br />
         <% else %>
 
         <!-- ログインしていない時 -->
