@@ -21,11 +21,11 @@
      	        <% @cart_items.each do |cart_item| %>
             	<tr>
             		<td>
-            		    <%= attachment_image_tag cart_item.item, :item_image, :fill, 50, 50 %>
+            		    <%= attachment_image_tag cart_item.item, :item_image, :size => '50x50' %>
             		    <%= cart_item.item.name %>
             		</td>
             		<td>
-            		    <%= cart_item.item.with_tax_price %>
+            		    <%= (cart_item.item.with_tax_price).to_s(:delimited, delimiter: ',') %>
             		</td>
             		<td>
             		    <%= form_with model:cart_item , url: cart_item_path(cart_item) do |c| %>
@@ -34,7 +34,7 @@
             			<% end %>
             		</td>
             		<td>
-            			<%= cart_item.subtotal %>
+            			<%= cart_item.subtotal.to_s(:delimited, delimiter: ',') %>
             		</td>
             		<td>
             		    <%= link_to '削除する', cart_item_path(cart_item.id), method: :delete %>
@@ -55,7 +55,7 @@
 		        <table class="table table-striped">
 			        <tr style="background:#dad7d7; border: 1px solid #fff;">
 			        <td>合計金額</td>
-			        <td><%= @sum %></td>
+			        <td><%= @sum.to_s(:delimited, delimiter: ',') %></td>
 			        </tr>
 		        </table>
 		    </div>
@@ -65,7 +65,7 @@
 	<% if @cart_items.blank? %>
 		<% else %>
 		<div class="text-center">
-			<%= link_to '購入に進む', new_order_path, class:"btn btn-success" %>
+			<%= link_to '情報入力に進む', new_order_path, class:"btn btn-success" %>
 		</div>
 	<% end %>
 </div>

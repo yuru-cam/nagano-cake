@@ -1,19 +1,39 @@
 <div class ="container">
-    <h2>ジャンル検索</h2>
+    <!--<h2>ジャンル検索</h2>-->
     <div class="row-4">
         <div class="col">
         </div>
     </div>
 
-    <h2>商品詳細</h2>
-    <div class="row-8">
+  <!--改行代わりの空白分-->
+  <p class="text-center">　　　　　　　　　　　　</p>
+
+<button type="button" class="btn btn-outline-light">商品詳細</button>
+
+<!--改行代わりの空白分-->
+  <p class="text-center">　　　　　　　　　　　　</p>
+
+<span style="color:white">
+
+    <div class="row">
         <div class="col">
-            <div class="col-6">
-                <p><%= attachment_image_tag @item, :item_image, size:'300x300' %></p>
+            <div class="col">
+                <p><%= attachment_image_tag @item, :item_image, size:'400x400' %></p>
             </div>
-            <div class="col-6">
+            <div class="col">
+
+  <!--改行代わりの空白分-->
+  <p class="text-center">　　　　　　　　　　　　</p>
+
                 <h3><%= @item.name %></h3>
+
+                <!--改行代わりの空白分-->
+                <p class="text-center">　　　　　　　　　　　　</p>
+
                 <p><%= @item.body %></p>
+                <!--改行代わりの空白分-->
+                <p class="text-center">　　　　　　　　　　　　</p>
+
                 <p>¥<%= ((@item.price*1.1).floor).to_s(:delimited, delimiter: ',') %>円（税込）</p>
                 <%= form_with model:@cart_item , url: cart_items_path, method: :post do |f| %>
                     <%= f.hidden_field :item_id, :value => @item.id %>
@@ -21,6 +41,10 @@
                     <p><%= f.select :quantity, [['1個', 1], ['2個', 2], ['3個', 3], ['4個', 4], ['5個', 5], ['6個', 6], ['7個', 7], ['8個', 8], ['9個', 9]], { include_blank: '選択してください' } %></p>
                     <p><%= f.submit "カートに入れる", class:"btn btn-primary"%></p>
                 <% end %>
+
+  <!--改行代わりの空白分-->
+  <p class="text-center">　　　　　　　　　　　　</p>
+
             </div>
         </div>
     </div>

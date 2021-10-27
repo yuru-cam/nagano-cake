@@ -22,6 +22,8 @@
     <div class="row-8">
         <div class="col d-flex flex-wrap wrap">
             <!--アイテム要素-->
+            
+            
             <% @items.each do |item| %>
             <% if item.is_active == true %>
             <div class="col",style="padding-right: 0px; padding-left: 0px; margin: 10px 0;">
@@ -37,5 +39,5 @@
         </div>
         <%= paginate @items %>
     </div>
-  </span>
+    </span>
 </div>
