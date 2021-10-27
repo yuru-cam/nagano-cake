@@ -1,9 +1,19 @@
-<h4>マイページ</h4>
+        <!--改行代わりの空白分-->
+      　　<p class="text-center">　　　　　　　　　　　　</p>
+
+<div class="new-items">
+        <button type="button" class="btn btn-outline-light">マイページ</button>
+
+              <!--改行代わりの空白分-->
+      　<p class="text-center">　　　　　　　　　　　　</p>
+        <span style="color:white">
 
 <div class="customer-information">
-  <h4>登録情報</h4>
+  <h5>登録情報</h5>
   <%= link_to "編集する", edit_customers_path, class: "btn btn-success" %>
 
+
+<div class="alert alert-light" role="alert">
   <table>
     <tr>
       <th>氏名</th>
@@ -37,15 +47,28 @@
   </table>
 
 </div>
+</div>
 
+
+<!--改行代わりの空白分-->
+      　　<p class="text-center">　　　　　　　　　　　　</p>
 
 <div class="address">
-  <h4>配送先</h4>
+  <h5>配送先</h5>
   <%= link_to "一覧を見る", shipping_addresses_path, class: "btn btn-primary" %>
 </div>
 
+<!--改行代わりの空白分-->
+      　　<p class="text-center">　　　　　　　　　　　　</p>
 
 <div class="order-detail">
-  <h4>注文履歴</h4>
+  <h5>注文履歴</h5>
   <%= link_to "一覧を見る", orders_path, class: "btn btn-primary" %>
 </div>
+
+<!--改行代わりの空白分-->
+      　　<p class="text-center">　　　　　　　　　　　　</p>
+<!--改行代わりの空白分-->
+      　　<p class="text-center">　　　　　　　　　　　　</p>
+
+</span>
