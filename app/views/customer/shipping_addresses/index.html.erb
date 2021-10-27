@@ -36,25 +36,25 @@
 <!--改行代わりの空白分-->
       　　<p class="text-center">　　　　　　　　　　　　</p>
 
-<div class="row">
+<div class="row-12">
     <div class="col">
         <table class="table table-hover table-bordered">
         <thead>
             <tr class="address-info">
-                <th class="col">郵便番号</th>
-                <th class="col">住所</th>
-                <th class="col">宛名</th>
-                <th class="col"></th>
+                <th>郵便番号</th>
+                <th>住所</th>
+                <th>宛名</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             <% @shipping_addresses.each do |shipping_address| %>
               <tr>
-                <td class="col"><%= shipping_address.shipping_postcode %></td>
-                <td class="col"><%= shipping_address.shipping_address %></td>
-                <td class="col"><%= shipping_address.shipping_name %></td>
-                <td class="col">
-                    <%= link_to "編集する", edit_shipping_address_path(shipping_address), class: "glyphicon glyphicon-pencil btn-sm btn-primary" %>
+                <td><%= shipping_address.shipping_postcode %></td>
+                <td><%= shipping_address.shipping_address %></td>
+                <td><%= shipping_address.shipping_name %></td>
+                <td>
+                    <%= link_to "編集する", edit_shipping_address_path(shipping_address), class: "glyphicon glyphicon-pencil btn-sm btn-primary" %></br>
                     <%= link_to "削除する", shipping_address_path(shipping_address), method: :DELETE, class: "glyphicon glyphicon-trash btn-sm btn-danger" %>
                 </td>
               </tr>    

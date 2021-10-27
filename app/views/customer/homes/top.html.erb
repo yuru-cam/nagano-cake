@@ -69,23 +69,19 @@
           <% @items.each do |item| %>
           <div class="items", style="padding-right: 10px; padding-left: 0px; margin: 10px 0;">
             <%= link_to item_path(item.id) do %>
-
             <div class="card">
               <%= attachment_image_tag item, :item_image, size:"318x200" %>
               <!--<%#= attachment_image_tag item, :item_image, size:"150x150" %>-->
             <div class="card-body">
             </div>
             <% end %>
-            
               <p class="text-center">
                 　　<%= item.name %>
                 <!--改行代わりの空白分-->
       　　      <p class="text-center">
                 ￥<%= item.price %>
               </p>
-
             </div>
-
           </div>
           <% end %>
         </div>
@@ -94,17 +90,12 @@
 
 
 
-
+<%= paginate @items %>
 <nav class="navbar bottom navbar-dark bg-dark">
-  <a class="navbar-brand" <p class="text-center"><%= paginate @items %><%= link_to "全ての商品を見る▶︎", items_path %></p>
+  <a class="navbar-brand" <p class="text-center"><%= link_to "全ての商品を見る▶︎", items_path %></p>
   </a>
 </nav>
-      
-      
-      
     </div>
-
-
   </div>
 </div>
 </div>
