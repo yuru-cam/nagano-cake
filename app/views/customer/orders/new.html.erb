@@ -17,7 +17,7 @@
     <div class="offset-2 col-10">
 <!-- 支払い方法選択 -->
       <div class="row"><strong class="red-border px-3">お支払い方法</strong></div>
-        <div class="form-check mt-3">
+        <div class="form-check mt-3", style="background-color: white">
           <%= f.radio_button :payment_method, Order.payment_methods.key(0) %>
           <%= f.label :payment_method, Order.payment_methods_i18n[:credit_card] %>
           <%= f.radio_button :payment_method, Order.payment_methods.key(1) %>
@@ -27,9 +27,10 @@
   </div>
 
 <!-- お届け先選択 -->
-      <div class="container offset-2 col-10">
+      <div class="container offset-2">
         <strong class="red-border px-3">お届け先</strong>
       <!-- ログインcustomerの住所  -->
+      <div style="background-color: white">
       <div class="row">
         <div class="form-check mt-3">
           <%= f.radio_button :shipping_address_option, 0 %>
@@ -63,8 +64,8 @@
           <%= f.radio_button :shipping_address_option, 2 %>
           <%= f.label :shipping_address_option, "新しいお届け先" %>
             <div class="form-group row ml-4">
-              <%= f.label :"郵便番号(ハイフンなし)", class: 'col-3' %>
-              <%= f.text_field :postcode, class: 'form_control col-3' %>
+              <%= f.label :"郵便番号(ハイフンなし)", class: 'col-7' %>
+              <%= f.text_field :postcode, class: 'form_control col-5' %>
             </div>
             <div class="form-group row ml-4">
               <%= f.label :"住所", class: 'col-3' %>
@@ -77,6 +78,7 @@
         </div>
       </div>
     <!-- end -->
+    </div>
   </div>
   </div>
 
