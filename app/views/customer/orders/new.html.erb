@@ -1,5 +1,6 @@
 
 <!--会員側：新規注文受付、支払方法入力画面-->
+<%= form_with model:@order, url:orders_confirm_path, method: :post do |f| %>
 <div class="container ">
   <div class="row mt-5">
      <div class="offset-2 col-10">
@@ -12,13 +13,10 @@
 <!--改行代わりの空白分-->
   <p class="text-center">　　　　　　　　　　　　</p>
       <%= flash[:order_new] %>
-
-  
   <div class="row mt-5">
     <div class="offset-2 col-10">
 <!-- 支払い方法選択 -->
       <div class="row"><strong class="red-border px-3">お支払い方法</strong></div>
-      <%= form_with model:@order, url:orders_confirm_path, method: :post do |f| %>
         <div class="form-check mt-3">
           <%= f.radio_button :payment_method, Order.payment_methods.key(0) %>
           <%= f.label :payment_method, Order.payment_methods_i18n[:credit_card] %>

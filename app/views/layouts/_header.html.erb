@@ -61,13 +61,23 @@
 
         <% elsif admin_signed_in? %>
         <!--管理者がログインしている時-->
-        <ul class="nav pull-right nav-pills">
-         <li class="nav-link"><%= link_to "商品一覧", admin_items_path %></li>
-         <li class="nav-link"><%= link_to "会員一覧", admin_customers_path %></li>
-         <li class="nav-link"><%= link_to "注文履歴一覧", admin_root_path %></li>
-         <li class="nav-link"><%= link_to "ジャンル一覧", admin_genres_path %></li>
-         <li class="nav-link"><%= link_to "ログアウト", destroy_admin_session_path, method: :delete %></li>
+         <div class="wrapper">
+  <input type="checkbox" id="menuToggler" class="input-toggler" value="1" autofocus="true"/>
+  <label for="menuToggler" id="menuTogglerLabel" class="menu-toggler" role="button" aria-pressed="false" aria-expanded="false" aria-label="Navigation button">
+    <span class="menu-toggler__line"></span>
+    <span class="menu-toggler__line"></span>
+    <span class="menu-toggler__line"></span>
+  </label>
+  <nav id="sidebar" class="sidebar" role="navigation" aria-labelledby="menuTogglerLabel" aria-hidden="true">
+    <ul id="menubar" class="menu" role="menubar" aria-orientation="vertical">
+         <li class="nav-link"><%= link_to "Items", admin_items_path, class: "nav-link" %></li>
+         <li class="nav-link"><%= link_to "Cutomers", admin_customers_path, class: "nav-link" %></li>
+         <li class="nav-link"><%= link_to "Orders", admin_root_path, class: "nav-link" %></li>
+         <li class="nav-link"><%= link_to "Genres", admin_genres_path, class: "nav-link" %></li>
+         <li class="nav-link"><%= link_to "Logout", destroy_admin_session_path, method: :delete, class: "nav-link" %></li>
         <ul>
+    </nav>
+    </div>
         <% else %>
 
         <!-- ログインしていない時 -->
@@ -80,18 +90,14 @@
   </label>
   <nav id="sidebar" class="sidebar" role="navigation" aria-labelledby="menuTogglerLabel" aria-hidden="true">
     <ul id="menubar" class="menu" role="menubar" aria-orientation="vertical">
-
           <li class="nav-link"><%= link_to "About", about_path, class: "nav-link" %></li>
           <li class="nav-link"><%= link_to "Cakelist", items_path, class: "nav-link" %></li>
-          <li class="nav-link"><%= link_to "Signin", new_customer_registration_path, class: "nav-link" %></li>
+          <li class="nav-link"><%= link_to "Sign up", new_customer_registration_path, class: "nav-link" %></li>
           <li class="nav-link"><%= link_to "Login", new_customer_session_path, class: "nav-link" %></li>
-
   </nav>
-
 </div>
         <% end %>
         </ul>
     </nav>
-    </div>
   </div>
 </header>

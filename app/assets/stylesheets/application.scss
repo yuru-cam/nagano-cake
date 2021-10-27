@@ -43,6 +43,26 @@
 //     padding-right: 30px;
 // }
 
+.table{
+  background: white;
+}
+
+td{
+  white-space: nowrap;
+}
+
+th{
+  white-space: nowrap;
+}
+
+p{
+  color: black;
+}
+
+.items{
+  padding: 7px;
+}
+
 .site-name {
     margin-bottom: 300px;
     font-family: 'Playfair Display', serif;

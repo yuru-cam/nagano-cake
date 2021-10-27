@@ -2,7 +2,7 @@ class Customer::HomesController < ApplicationController
   
   def top
     @genres = Genre.all
-    @items = Item.all.page(params[:page]).per(4)
+    @items = Item.where(is_active: "true").page(params[:page]).per(3)
   end
   
   def about
