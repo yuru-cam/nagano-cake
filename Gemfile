@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.0'
+gem 'rails', '~> 5.2.5'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.3.6'
 # Use Puma as the app server
@@ -48,6 +48,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
+gem "devise-i18n" #deviseの日本語化
 
 gem "enum_help"
 
@@ -57,3 +58,8 @@ gem 'kaminari','~> 1.2.1'
 gem "refile", require: "refile/rails", github: 'manfe/refile'
 # 画像加工用（サイズ調整など）gem
 gem "refile-mini_magick"
+gem 'bootstrap', '~> 4.5'
+gem 'jquery-rails'
+gem 'font-awesome-sass', '~> 5.13'
+
+gem 'pry-byebug', group: :development

@@ -1,0 +1,76 @@
+
+<div class="cart_container" style="width:90%; margin: 20px auto; position:relative;">
+    <strong style="font-size:18px;">ショッピングカート</strong>
+    
+    <div class="row" style="width:100%; height:20px;"></div>
+       
+		
+		<table class="table table-bordered ">
+	        <thead style="background:#dad7d7; border: 1px solid #fff; ">
+		        <th>商品名</th>
+		        <th>単価(税込)</th>
+		        <th>数量</th>
+		        <th>小計</th>
+		        <th></th>
+	        </thead>
+	        <tbody>
+    	        <% @sum = 0 %>
+     	        <% @cart_items.each do |cart_item| %>
+            	<tr>
+            		<td>
+            		    <%= attachment_image_tag cart_item.item, :item_image, :size => '50x50' %>
+            		    <%= cart_item.item.name %>
+            		</td>
+            		<td>
+            		    <%= (cart_item.item.with_tax_price).to_s(:delimited, delimiter: ',') %>
+            		</td>
+            		<td>
+            		    <%= form_with model:cart_item , url: cart_item_path(cart_item) do |c| %>
+            		    <%= c.number_field :quantity, min:1, max:10000, step:1 %>
+            			<%= c.submit "変更", class: "btn btn-primary" %>
+            			<% end %>
+            		</td>
+            		<td>
+            			<%= cart_item.subtotal.to_s(:delimited, delimiter: ',') %>
+            		</td>
+            		<td>
+            		    <%= link_to '削除する', cart_item_path(cart_item.id), method: :delete %>
+            		</td>
+            		    <% @sum += cart_item.subtotal %>
+            	</tr>
+            	<% end %>
+         	</tbody>
+        </table>
+        <div class="row ">
+	        <div class="col-3">
+		        <table class="table table-striped">
+			        <tr style="background:#dad7d7; border: 1px solid #fff;">
+			        <td>合計金額</td>
+			        <td><%= @sum.to_s(:delimited, delimiter: ',') %></td>
+			        </tr>
+		        </table>
+		    </div>
+	        <!-- カートに商品が入っていたら表示させる -->
+	       <% if @cart_items.blank? %>
+	       <div class="offset-2 col-7">
+	            <%= link_to "買い物を続ける", root_path , class:"btn btn-info " %>
+	        </div>
+			<% else %>
+			<div class="col-3">
+	            <%= link_to "買い物を続ける", root_path , class:"btn btn-info " %>
+	        </div>
+			<div class="col-3">
+			<%= link_to '情報入力に進む', new_order_path, class:"btn btn-success " %>
+			</div>
+			<div class="col-3">
+	        <%= link_to "カートを空にする", clear_path , method: :delete ,  class: "btn btn-danger" %>
+			</div>
+			<% end %>
+		</div>
+        </div>
+
+
+
+		
+</div>
+

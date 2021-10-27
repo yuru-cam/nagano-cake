@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kurenaido&display=swap');
+</style>
   <head>
     <title>Naganocake</title>
     <%= csrf_meta_tags %>
@@ -9,6 +12,20 @@
   </head>
 
   <body>
-    <%= yield %>
+    <!--ヘッダー-->
+    <header><%= render "layouts/header" %></header>
+
+     <!--body部分（本文）-->
+  <div class="main-container">
+    <main>
+      <div class="d-flex align-items-center justify-content-center">
+        <div><%= yield %></div>
+      </div>
+    </main>
+  </div>
+
+    <!--フッター-->
+    <footer><%= render "layouts/footer" %></footer>
   </body>
+
 </html>

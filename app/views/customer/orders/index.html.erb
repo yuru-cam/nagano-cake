@@ -1,0 +1,59 @@
+<div class="container my-5">
+  <div class="row">
+    <div class-"offset-1">
+
+        <!--改行代わりの空白分-->
+  <p class="text-center">　　　　　　　　　　　　</p>
+
+<button type="button" class="btn btn-outline-light">注文履歴一覧</button>
+
+<!--改行代わりの空白分-->
+  <p class="text-center">　　　　　　　　　　　　</p>
+
+
+    </div>
+  </div>
+
+  <div class="row mt-3">
+      <table class="table table-striped">
+        <thead>
+          <tr class="red-border">
+            <th>注文日</th>
+            <th>配送先</th>
+            <th>注文商品</th>
+            <th>支払金額</th>
+            <th>ステータス</th>
+            <th>注文詳細</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @orders.each do |order| %>
+            <tr class="brown-border">
+              <td class="align-middle">
+                <%= order.created_at.strftime("%Y-%m-%d %H:%M") %>
+              </td>
+              <td class="align-middle">
+                <%= "〒" + order.shipping_postcode + "  " + order.shipping_address + "  " + order.shipping_name %>
+              </td>
+              <td class="align-middle">
+                <% order.order_details.each do |order_detail| %>
+                <%= order_detail.item.name %><br>
+                <% end %>
+              </td>
+              <td class="align-middle">
+                <%= (order.order_details.sum(:price) + order.shipping_fee).to_s(:delimited, delimiter: ',') %>
+              </td>
+              <td class="align-middle">
+                <%= order.order_status %>
+              </td>
+              <td class="align-middle">
+                <%=link_to "表示する", order_path(order), class: "btn btn-sm btn-outline-danger" %>
+              </td>
+            </tr>
+            <% end %>
+        </tbody>
+
+      </table>
+  </div>
+</div>
