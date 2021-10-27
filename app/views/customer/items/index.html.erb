@@ -27,9 +27,6 @@
             <% @items.each do |item| %>
             <% if item.is_active == true %>
             <div class="col",style="padding-right: 0px; padding-left: 0px; margin: 10px 0;">
-                
-                
-                
 				<%= link_to attachment_image_tag(item, :item_image ,size:'300x300') , item_path(item.id) %></br>
 				<%= item.name %></br>
 				¥<%= item.price.to_s(:delimited, delimiter: ',') %>
