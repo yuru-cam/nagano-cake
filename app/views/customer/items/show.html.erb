@@ -14,7 +14,6 @@
   <p class="text-center">　　　　　　　　　　　　</p>
 
 <span style="color:white">
-
     <div class="row">
         <div class="col">
             <div class="col">
@@ -24,16 +23,12 @@
 
   <!--改行代わりの空白分-->
   <p class="text-center">　　　　　　　　　　　　</p>
-
                 <h3><%= @item.name %></h3>
-
                 <!--改行代わりの空白分-->
                 <p class="text-center">　　　　　　　　　　　　</p>
-
                 <p><%= @item.body %></p>
                 <!--改行代わりの空白分-->
                 <p class="text-center">　　　　　　　　　　　　</p>
-
                 <p>¥<%= ((@item.price*1.1).floor).to_s(:delimited, delimiter: ',') %>円（税込）</p>
                 <%= form_with model:@cart_item , url: cart_items_path, method: :post do |f| %>
                     <%= f.hidden_field :item_id, :value => @item.id %>

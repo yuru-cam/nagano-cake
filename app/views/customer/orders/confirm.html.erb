@@ -12,7 +12,7 @@
     <div class="offset-1 col-7">
 
 <!-- 注文商品の情報 -->
-      <table class="table table-border table-sm ">
+      <table class="table table-striped ">
         <thead class="table-light">
           <tr class="red-border">
             <th>商品</th>
@@ -42,7 +42,7 @@
 <!-- 金額の情報 -->
     <div class="col-2 d-flex">
 
-      <table class="table table-sm table-borderless align-self-end">
+      <table class="table table-bordered align-self-end">
         <tbody>
           <tr class="brown-border">
             <td>送料</td>
@@ -66,26 +66,15 @@
 <!-- その他情報 -->
   <div class="row mt-5">
     <div class="offset-2 col-6">
-      <div class="row mt-3">
+      <div class="row mt-3", style="background-color: white">
         <strong class="red-border px-3 mr-3">支払方法</strong>
         <span class="brown-border px-3"><%= @order.payment_method_i18n %></span>
       </div>
       <%= @test %>
-      <div class="row mt-3">
-        <strong class="red-border px-3 mr-3">　お届け先　</strong>
+      <div class="row mt-3", style="background-color: white">
+        <strong class="red-border px-3 mr-3">お届け先</strong>
         <span class="brown-border px-3">
-          <!-- うけとった文字列が8けたより少なければ -->
-          <%# if  session[:address].length < 8 %>
-          <%#= @order.shipping_postcode %>
-          <%#= @order.shipping_address %>
-          <%#= @order.last_name %>
-          <%#= @order.first_name %>
-           <%= "〒" + @order.shipping_postcode + "  " + @order.shipping_address + "  " + @order.shipping_name %>
-
-          <!-- 受け取った文字列がそれ以外なら -->
-          <%# else %>
-            <%#= current_customer.postcode %><span>様</span>
-          <%# end %>
+           <%= "〒" + @order.shipping_postcode + "  " + @order.shipping_address + "  " + @order.shipping_name %><span>様</span>
         </span>
       </div>
     </div>
@@ -101,6 +90,5 @@
 		<%= f.submit "注文を確定する", class: "btn btn-success text-cenrer btn-lg" %>
 		<% end %>
     </div>
-    
   </div>
 </div>
