@@ -15,14 +15,14 @@ class Customer::CartItemsController < ApplicationController
     @cart_item.save
     redirect_to cart_items_path
   end
-  
+
   #カートを空にする
   def clear
   	@cart_items = current_customer.cart_items
     @cart_items.destroy_all
     redirect_to cart_items_path
   end
-  
+
   # 削除や個数を変更した際、カート商品を再計算する
     def update
         @cart_item = CartItem.find(params[:id])

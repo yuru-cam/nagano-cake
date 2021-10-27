@@ -1,19 +1,22 @@
+
+
+
 <div class="container">
 <div class="row">
     <div class="col">
-        
+
         <!--改行代わりの空白分-->
       　　<p class="text-center">　　　　　　　　　　　　</p>
-      　　
+
       <button type="button" class="btn btn-outline-light">配送先登録/一覧</button>
-      
+
       <!--改行代わりの空白分-->
       　　<p class="text-center">　　　　　　　　　　　　</p>
-      　　
+
         <%= form_with model: @shipping_address do |f| %>
             <div class="shipping_addres">
                 <div class="form-group">
-                    
+
                     <%= f.label :"郵便番号(ハイフンなし)" ,class: "control-label" %>
                     <%= f.text_field :shipping_postcode, class: "form-control-static postal_code" %>
                 </div>
@@ -38,6 +41,7 @@
 
 <div class="row">
     <div class="col">
+        <tr class="table-light">
         <table class="table table-hover table-bordered">
         <thead>
             <tr class="address-info">
@@ -57,7 +61,7 @@
                     <%= link_to "編集する", edit_shipping_address_path(shipping_address), class: "glyphicon glyphicon-pencil btn-sm btn-primary" %>
                     <%= link_to "削除する", shipping_address_path(shipping_address), method: :DELETE, class: "glyphicon glyphicon-trash btn-sm btn-danger" %>
                 </td>
-              </tr>    
+              </tr>
             <% end %>
         </tbody>
         </table>
